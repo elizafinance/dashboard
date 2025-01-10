@@ -5,6 +5,7 @@ import { TokenHolding } from "@/types";
 import { formatDateTime } from '@/lib/date-utils';
 import { useState, useEffect } from 'react';
 import { getLatestData } from './actions';
+import { ChatTerminal } from "@/components/chat-terminal";
 
 export default function Page() {
   const [holdings, setHoldings] = useState<TokenHolding[]|null>(null);
@@ -41,7 +42,7 @@ export default function Page() {
 
           <div className="flex flex-col items-center gap-4 mb-4">
             <h1 className="text-[32px] font-bold leading-[36px] text-center">
-              <span className="text-[rgb(36,36,36)]">DeFAI Leaderboard</span>{" "}
+              <span className="text-[rgb(36,36,36)]">DeFAI</span>{" "}
               <span className="text-gray-400">v1.0</span>
             </h1>
             <h2 className="text-[18px] leading-[24px] text-center text-[rgb(68,77,86)]">
@@ -61,6 +62,7 @@ export default function Page() {
               </a>
             </div>
           </div>
+          <ChatTerminal />
           {
             (error) ?
               <div>{error}</div> :
@@ -68,7 +70,10 @@ export default function Page() {
                 <div>Loading...</div> : 
                 (holdings === null) ?
                   <div>No data found</div> :
-                  <TokenGrid holdings={holdings} />
+                  <>
+                   
+                    <TokenGrid holdings={holdings} />
+                  </>
           }
           
           <footer className="mt-8 text-center text-[rgb(68,77,86)] text-sm">
