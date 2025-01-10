@@ -6,7 +6,7 @@ export function NavHeader() {
   return (
     <header className="w-full border-b border-gray-800 bg-black">
       <div className="container max-w-[95vw] mx-auto px-4 py-3 flex items-center justify-between">
-        <a href="https://elizas.world/" target="_blank" className="hover:opacity-80 transition-opacity">
+        <a href="https://my.eliza.finance/" target="_blank" className="hover:opacity-80 transition-opacity">
           <img 
             src="/observatory_orange.png" 
             alt="Observatory Logo" 
