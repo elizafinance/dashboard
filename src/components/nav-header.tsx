@@ -6,12 +6,8 @@ export function NavHeader() {
   return (
     <header className="w-full border-b border-gray-800 bg-black">
       <div className="container max-w-[95vw] mx-auto px-4 py-3 flex items-center justify-between">
-        <a href="https://my.eliza.finance" target="_blank" className="hover:opacity-80 transition-opacity">
-          <img 
-            src="/observatory_orange.png" 
-            alt="Observatory Logo" 
-            className="h-8 w-8"
-          />
+        <a href="https://eliza.finance" target="_blank" className="text-[#ff6b35] font-bold text-xl hover:opacity-80 transition-opacity">
+          Eliza.Finance
         </a>
         <nav className="flex items-center gap-4">
           <a 

@@ -63,7 +63,7 @@ export default function Page() {
             </div>
           </div>
           <ChatTerminal />
-          {
+         {/* {
             (error) ?
               <div>{error}</div> :
               (isLoading) ? 
@@ -74,7 +74,7 @@ export default function Page() {
                    
                     <TokenGrid holdings={holdings} />
                   </>
-          }
+          } */}
           
           <footer className="mt-8 text-center text-[rgb(68,77,86)] text-sm">
             <p>
@@ -90,7 +90,7 @@ export default function Page() {
               {' '}to contribute on <a href="https://github.com/elizafinance/dashboard" target="_blank" rel="noopener noreferrer" className="text-[rgb(94,84,68)] hover:opacity-80 transition-opacity">GitHub</a>
             </p>
             <p>Also, DYOR / NFA / GTFO, ILU 🖤</p>
-            <p>Forked with ❤️ from <a href="https://x.com/timshel" target="_blank" rel="noopener noreferrer" className="text-[rgb(94,84,68)] hover:opacity-80 transition-opacity">Eliza's World</a></p>
+            <p>Forked with ❤️ from <a href="https://x.com/" target="_blank" rel="noopener noreferrer" className="text-[rgb(94,84,68)] hover:opacity-80 transition-opacity">Eliza's World</a></p>
             <div className="flex justify-center gap-4 mt-4">
               <a 
                 href="https://github.com/ai16z/elizas-world/"
