@@ -4,10 +4,16 @@ import { useState, useRef, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 
 interface Message {
-  role: 'user' | 'assistant';
+  role: 'user' | 'assistant' | 'system';
   content: string;
   timestamp: Date;
 }
+
+const INITIAL_MESSAGE: Message = {
+  role: 'assistant',
+  content: "Hello! I'm Eliza, your DeFi AI assistant. How can I help you today? 🤖",
+  timestamp: new Date()
+};
 
 export function ChatTerminal() {
   const [input, setInput] = useState('');
@@ -22,6 +28,10 @@ export function ChatTerminal() {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  useEffect(() => {
+    setMessages([INITIAL_MESSAGE]);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,15 +48,24 @@ export function ChatTerminal() {
     setIsTyping(true);
 
     try {
-      // TODO: Replace with actual ElizaOS API call
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: input })
+        body: JSON.stringify({ 
+          message: input,
+          history: messages.map(msg => ({
+            role: msg.role,
+            content: msg.content
+          }))
+        })
       });
 
       const data = await response.json();
       
+      if (data.error) {
+        throw new Error(data.error);
+      }
+
       const assistantMessage: Message = {
         role: 'assistant',
         content: data.response,
@@ -56,6 +75,11 @@ export function ChatTerminal() {
       setMessages(prev => [...prev, assistantMessage]);
     } catch (error) {
       console.error('Failed to get response:', error);
+      setMessages(prev => [...prev, {
+        role: 'assistant',
+        content: 'Sorry, I encountered an error. Please try again.',
+        timestamp: new Date()
+      }]);
     } finally {
       setIsTyping(false);
     }
@@ -82,7 +106,7 @@ export function ChatTerminal() {
         ))}
         {isTyping && (
           <div className="text-green-400">
-            <span className="text-gray-500">eliza></span> ▋
+            <span className="text-gray-500">eliza&gt;</span> ▋
           </div>
         )}
         <div ref={messagesEndRef} />
