@@ -19,7 +19,7 @@ const TableHeader = React.forwardRef<
   HTMLTableSectionElement,
   React.HTMLAttributes<HTMLTableSectionElement>
 >(({ className, ...props }, ref) => (
-  <thead ref={ref} className={cn("[&_tr]:border-b", className)} {...props} />
+  <thead ref={ref} className={cn("bg-gray-900 sticky top-0", className)} {...props} />
 ))
 TableHeader.displayName = "TableHeader"
 
@@ -35,21 +35,6 @@ const TableBody = React.forwardRef<
 ))
 TableBody.displayName = "TableBody"
 
-const TableRow = React.forwardRef<
-  HTMLTableRowElement,
-  React.HTMLAttributes<HTMLTableRowElement>
->(({ className, ...props }, ref) => (
-  <tr
-    ref={ref}
-    className={cn(
-      "border-b border-gray-800 transition-colors hover:bg-gray-900 data-[state=selected]:bg-gray-800",
-      className
-    )}
-    {...props}
-  />
-))
-TableRow.displayName = "TableRow"
-
 const TableHead = React.forwardRef<
   HTMLTableCellElement,
   React.ThHTMLAttributes<HTMLTableCellElement>
@@ -57,7 +42,8 @@ const TableHead = React.forwardRef<
   <th
     ref={ref}
     className={cn(
-      "h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0",
+      "h-10 px-2 text-left align-middle font-medium text-gray-300",
+      "border-r border-gray-700 last:border-r-0",
       className
     )}
     {...props}
@@ -71,17 +57,38 @@ const TableCell = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <td
     ref={ref}
-    className={cn("p-4 align-middle [&:has([role=checkbox])]:pr-0", className)}
+    className={cn(
+      "p-2 align-middle [&:has([role=checkbox])]:pr-0",
+      "border-r border-gray-800 last:border-r-0",
+      "border-b border-gray-800",
+      className
+    )}
     {...props}
   />
 ))
 TableCell.displayName = "TableCell"
 
+const TableRow = React.forwardRef<
+  HTMLTableRowElement,
+  React.HTMLAttributes<HTMLTableRowElement>
+>(({ className, ...props }, ref) => (
+  <tr
+    ref={ref}
+    className={cn(
+      "hover:bg-gray-900/50 data-[state=selected]:bg-gray-900",
+      "transition-colors",
+      className
+    )}
+    {...props}
+  />
+))
+TableRow.displayName = "TableRow"
+
 export {
   Table,
-  TableBody,
-  TableCell,
-  TableHead,
   TableHeader,
+  TableBody,
+  TableHead,
   TableRow,
+  TableCell,
 } 

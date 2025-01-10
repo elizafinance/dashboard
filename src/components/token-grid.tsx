@@ -262,18 +262,24 @@ export function TokenGrid({ holdings }: { holdings: TokenHolding[] }) {
         variant="ghost"
         onClick={() => handleSort(sortKey)}
         className={`
-          flex items-center gap-1
+          w-full h-full px-2 py-1 justify-between
+          font-medium text-gray-300
+          hover:bg-gray-800
           ${sortConfig.key === sortKey 
-            ? 'bg-[rgb(232,227,214)]' // Same color as hover state for active column
-            : 'hover:bg-[rgb(232,227,214)]'
+            ? 'bg-gray-800' 
+            : ''
           }
         `}
       >
         {label}
         {sortConfig.key === sortKey ? (
-          sortConfig.direction === 'desc' ? <ArrowDown className="h-4 w-4" /> : <ArrowUp className="h-4 w-4" />
+          sortConfig.direction === 'desc' ? (
+            <ArrowDown className="h-4 w-4" />
+          ) : (
+            <ArrowUp className="h-4 w-4" />
+          )
         ) : (
-          <ArrowUpDown className="h-4 w-4" />
+          <ArrowUpDown className="h-4 w-4 opacity-50" />
         )}
       </Button>
     </TableHead>
