@@ -7,9 +7,8 @@
     "node": "=20.11.1"
   },
   "scripts": {
-    "preinstall": "npx only-allow pnpm",
     "dev": "next dev",
-    "build": "pnpm install && next build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "test": "echo \"Error: no test specified\" && exit 1"
