@@ -15,10 +15,13 @@ const INITIAL_MESSAGE: Message = {
   timestamp: new Date()
 };
 
+const DEFAI_ADDRESS = '5LGyBHMMPwzMunxhcBMn6ZWAuqoHUQmcFiboTJidFURP';
+const DEFAI_RESPONSE = `DeFAI (${DEFAI_ADDRESS}) is a decentralized finance token that powers the Eliza Finance ecosystem. It serves as the governance token for the protocol and enables holders to participate in key decisions regarding the platform's development and future direction. The token implements advanced AI mechanisms for automated market making and liquidity provision.`;
+
 export function ChatTerminal() {
+  const [messages, setMessages] = useState<Message[]>([INITIAL_MESSAGE]);
   const [input, setInput] = useState('');
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [isTyping, setIsTyping] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -28,10 +31,6 @@ export function ChatTerminal() {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
-
-  useEffect(() => {
-    setMessages([INITIAL_MESSAGE]);
-  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -45,43 +44,41 @@ export function ChatTerminal() {
 
     setMessages(prev => [...prev, userMessage]);
     setInput('');
-    setIsTyping(true);
+    setIsLoading(true);
 
     try {
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          message: input,
-          history: messages.map(msg => ({
-            role: msg.role,
-            content: msg.content
-          }))
-        })
-      });
-
-      const data = await response.json();
+      let responseContent;
       
-      if (data.error) {
-        throw new Error(data.error);
+      // Check if message contains the DeFAI address
+      if (input.includes(DEFAI_ADDRESS)) {
+        responseContent = DEFAI_RESPONSE;
+      } else {
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: input })
+        });
+        const data = await response.json();
+        responseContent = data.response;
       }
 
       const assistantMessage: Message = {
         role: 'assistant',
-        content: data.response,
+        content: responseContent,
         timestamp: new Date()
       };
 
       setMessages(prev => [...prev, assistantMessage]);
     } catch (error) {
-      console.error('Failed to get response:', error);
-      setMessages(prev => [...prev, {
+      console.error('Chat error:', error);
+      const errorMessage: Message = {
         role: 'assistant',
         content: 'Sorry, I encountered an error. Please try again.',
         timestamp: new Date()
-      }]);
+      };
+      setMessages(prev => [...prev, errorMessage]);
     } finally {
-      setIsTyping(false);
+      setIsLoading(false);
     }
   };
 
@@ -104,7 +101,7 @@ export function ChatTerminal() {
             {msg.content}
           </div>
         ))}
-        {isTyping && (
+        {isLoading && (
           <div className="text-green-400">
             <span className="text-gray-500">eliza&gt;</span> ▋
           </div>
