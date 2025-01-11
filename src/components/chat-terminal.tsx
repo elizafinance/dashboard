@@ -9,6 +9,12 @@ interface Message {
   timestamp: Date;
 }
 
+const DISCLAIMER_MESSAGE: Message = {
+  role: 'system',
+  content: "⚠️ DISCLAIMER: This AI assistant is in Alpha Phase (v0.01) and may be subject to hallucinations and errors. Please verify any critical information independently.",
+  timestamp: new Date()
+};
+
 const INITIAL_MESSAGE: Message = {
   role: 'assistant',
   content: "Hello! I'm Eliza, your DeFi AI assistant. How can I help you today? 🤖",
