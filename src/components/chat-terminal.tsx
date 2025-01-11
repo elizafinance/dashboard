@@ -37,7 +37,7 @@ const handleContractQuery = (message: string): string | null => {
 };
 
 export function ChatTerminal() {
-  const [messages, setMessages] = useState<Message[]>([INITIAL_MESSAGE]);
+  const [messages, setMessages] = useState<Message[]>([DISCLAIMER_MESSAGE, INITIAL_MESSAGE]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
