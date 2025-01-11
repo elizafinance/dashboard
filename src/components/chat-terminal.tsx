@@ -15,8 +15,20 @@ const INITIAL_MESSAGE: Message = {
   timestamp: new Date()
 };
 
-const DEFAI_ADDRESS = '5LGyBHMMPwzMunxhcBMn6ZWAuqoHUQmcFiboTJidFURP';
-const DEFAI_RESPONSE = `DeFAI (${DEFAI_ADDRESS}) is a decentralized finance token that powers the Eliza Finance ecosystem. It serves as the governance token for the protocol and enables holders to participate in key decisions regarding the platform's development and future direction. The token implements advanced AI mechanisms for automated market making and liquidity provision.`;
+// The address will be loaded from environment variable
+const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_DEFAI_CONTRACT_ADDRESS;
+
+const handleContractQuery = (message: string): string | null => {
+  const contractKeywords = ['contract', 'address', 'token address'];
+  const hasContractKeyword = contractKeywords.some(keyword => 
+    message.toLowerCase().includes(keyword)
+  );
+
+  if (hasContractKeyword) {
+    return `The DeFAI contract address is: ${CONTRACT_ADDRESS}`;
+  }
+  return null;
+};
 
 export function ChatTerminal() {
   const [messages, setMessages] = useState<Message[]>([INITIAL_MESSAGE]);
@@ -47,28 +59,32 @@ export function ChatTerminal() {
     setIsLoading(true);
 
     try {
-      let responseContent;
+      // Check for contract address query first
+      const contractResponse = handleContractQuery(input);
       
-      // Check if message contains the DeFAI address
-      if (input.includes(DEFAI_ADDRESS)) {
-        responseContent = DEFAI_RESPONSE;
+      if (contractResponse) {
+        const assistantMessage: Message = {
+          role: 'assistant',
+          content: contractResponse,
+          timestamp: new Date()
+        };
+        setMessages(prev => [...prev, assistantMessage]);
       } else {
+        // Proceed with normal API call
         const response = await fetch('/api/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ message: input })
         });
         const data = await response.json();
-        responseContent = data.response;
+        
+        const assistantMessage: Message = {
+          role: 'assistant',
+          content: data.response,
+          timestamp: new Date()
+        };
+        setMessages(prev => [...prev, assistantMessage]);
       }
-
-      const assistantMessage: Message = {
-        role: 'assistant',
-        content: responseContent,
-        timestamp: new Date()
-      };
-
-      setMessages(prev => [...prev, assistantMessage]);
     } catch (error) {
       console.error('Chat error:', error);
       const errorMessage: Message = {
