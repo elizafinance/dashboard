@@ -3,7 +3,6 @@
 import { ExternalLink, Menu, X } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { WalletButton } from './wallet-button'
 import { Button } from "@/components/ui/button"
 import { useState } from 'react'
 import dynamic from 'next/dynamic'
