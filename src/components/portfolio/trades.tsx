@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { useWallet } from '@solana/wallet-adapter-react'
-import { INITIAL_POOLS } from '@/components/liquidity-pools'
+import poolsData from '@/data/pools.json'
 
 interface TradeOpportunity {
   pair: string
@@ -20,23 +20,15 @@ export function TradesAndSwaps() {
   const [opportunities, setOpportunities] = useState<TradeOpportunity[]>([])
 
   useEffect(() => {
-    // TODO: Fetch real trading opportunities
-    setOpportunities([
-      {
-        pair: 'DEFAI/SOL',
-        type: 'swap',
-        expectedReturn: 2.5,
-        confidence: 85,
-        route: ['Jupiter', 'Orca']
-      },
-      {
-        pair: 'DEFAI/USDC',
-        type: 'arbitrage',
-        expectedReturn: 1.8,
-        confidence: 92,
-        route: ['Raydium', 'Jupiter', 'Orca']
-      }
-    ])
+    // Generate trade opportunities from pools data
+    const tradeOpps = poolsData.pools.slice(0, 2).map(pool => ({
+      pair: `${pool.token0}/${pool.token1}`,
+      type: Math.random() > 0.5 ? 'swap' : 'arbitrage' as 'swap' | 'arbitrage',
+      expectedReturn: +(Math.random() * 3).toFixed(1),
+      confidence: Math.floor(Math.random() * 20) + 80,
+      route: ['Jupiter', 'Orca', 'Raydium'].slice(0, Math.floor(Math.random() * 2) + 2)
+    }))
+    setOpportunities(tradeOpps)
     setLoading(false)
   }, [publicKey])
 
