@@ -68,45 +68,47 @@ export function LiquidityPools() {
   const [pools] = useState<Pool[]>(INITIAL_POOLS);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 p-4 max-w-6xl mx-auto">
       {pools.map((pool) => (
-        <Card key={pool.id} className="p-4 bg-black border-gray-800">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center">
-                🐚
+        <Card 
+          key={pool.id} 
+          className="p-4 bg-gradient-to-br from-[var(--shell)] to-[var(--sand-light)] border-[var(--ocean-light)]/20 hover:border-[var(--ocean-light)] transition-all duration-300 group"
+        >
+          <div className="flex flex-col items-center text-center gap-3">
+            <div className="w-16 h-16 rounded-full bg-[var(--ocean-light)]/10 flex items-center justify-center border-2 border-[var(--ocean-light)]/20 group-hover:border-[var(--ocean-light)] transition-colors">
+              <span className="text-3xl">🐚</span>
+            </div>
+            
+            <div>
+              <h3 className="font-bold text-[var(--ocean-dark)]">{pool.name}</h3>
+              <div className="space-y-1 mt-2">
+                <p className="text-sm text-[var(--ocean-dark)]/60">
+                  TVL: ${pool.tvl.toLocaleString()}
+                </p>
+                <p className="text-sm text-[var(--ocean-dark)]/60">
+                  APR: {pool.apr}% 🌊
+                </p>
               </div>
-              <div>
-                <h3 className="font-bold text-lg">{pool.name}</h3>
-                <p className="text-gray-400 text-sm">Pool</p>
-              </div>
             </div>
-          </div>
 
-          <div className="space-y-4 mb-4">
-            <div className="flex justify-between">
-              <span className="text-gray-400">TVL</span>
-              <span className="font-medium">${pool.tvl.toLocaleString()}</span>
+            <div className="grid grid-cols-2 gap-2 w-full mt-2">
+              <Button 
+                variant="outline" 
+                size="sm"
+                className="border-[var(--ocean-light)]/40 text-[var(--ocean-dark)] 
+                         hover:bg-[var(--ocean-light)]/10 transition-colors text-xs"
+              >
+                Deposit 🏊‍♂️
+              </Button>
+              <Button 
+                variant="outline"
+                size="sm"
+                className="border-[var(--ocean-light)]/40 text-[var(--ocean-dark)]
+                         hover:bg-[var(--ocean-light)]/10 transition-colors text-xs"
+              >
+                Withdraw 🌴
+              </Button>
             </div>
-            <div className="flex justify-between">
-              <span className="text-gray-400">APR</span>
-              <span className="font-medium text-green-500">{pool.apr}%</span>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-2">
-            <Button 
-              variant="outline" 
-              className="w-full border-gray-700 hover:bg-gray-800"
-            >
-              Deposit
-            </Button>
-            <Button 
-              variant="outline"
-              className="w-full border-gray-700 hover:bg-gray-800"
-            >
-              Withdraw
-            </Button>
           </div>
         </Card>
       ))}
