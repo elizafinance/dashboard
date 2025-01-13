@@ -4,14 +4,18 @@ import { useEffect, useState } from 'react'
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { useWallet } from '@solana/wallet-adapter-react'
+import poolsData from '@/data/pools.json'
 
 interface YieldOpportunity {
-  pool: string
-  protocol: string
-  apy: number
+  id: string
+  name: string
+  token0: string
+  token1: string
   tvl: number
-  risk: 'Low' | 'Medium' | 'High'
-  recommended: boolean
+  apr: number
+  protocol?: string
+  risk?: 'Low' | 'Medium' | 'High'
+  recommended?: boolean
 }
 
 export function YieldAggregation() {
@@ -20,25 +24,14 @@ export function YieldAggregation() {
   const [opportunities, setOpportunities] = useState<YieldOpportunity[]>([])
 
   useEffect(() => {
-    // TODO: Fetch real yield opportunities
-    setOpportunities([
-      {
-        pool: 'DEFAI/SOL',
-        protocol: 'Orca',
-        apy: 42.5,
-        tvl: 1500000,
-        risk: 'Medium',
-        recommended: true
-      },
-      {
-        pool: 'DEFAI/USDC',
-        protocol: 'Raydium',
-        apy: 35.8,
-        tvl: 2800000,
-        risk: 'Low',
-        recommended: true
-      }
-    ])
+    // Transform pool data to include additional yield-specific fields
+    const yieldOpps = poolsData.pools.map(pool => ({
+      ...pool,
+      protocol: ['Orca', 'Raydium', 'Jupiter'][Math.floor(Math.random() * 3)], // Temporary random assignment
+      risk: ['Low', 'Medium', 'High'][Math.floor(Math.random() * 3)] as 'Low' | 'Medium' | 'High',
+      recommended: Math.random() > 0.5
+    }))
+    setOpportunities(yieldOpps)
     setLoading(false)
   }, [publicKey])
 
@@ -64,22 +57,26 @@ export function YieldAggregation() {
           </div>
         ) : (
           <div className="space-y-4">
-            {opportunities.map((opp, index) => (
+            {opportunities.map((opp) => (
               <div 
-                key={index}
+                key={opp.id}
                 className="bg-white/80 p-4 rounded-lg border border-[var(--ocean-light)]/20"
               >
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 items-center">
                   <div>
-                    <h3 className="font-semibold text-[var(--ocean-dark)]">{opp.pool}</h3>
+                    <h3 className="font-semibold text-[var(--ocean-dark)]">{opp.name}</h3>
                     <p className="text-sm text-[var(--ocean-dark)]/60">{opp.protocol}</p>
                   </div>
                   <div className="text-center">
-                    <p className="text-2xl font-bold text-[var(--coral)]">{opp.apy}%</p>
-                    <p className="text-xs text-[var(--ocean-dark)]/60">APY</p>
+                    <p className="text-2xl font-bold text-[var(--coral)]">
+                      {opp.apr ? `${opp.apr}%` : 'TBA'}
+                    </p>
+                    <p className="text-xs text-[var(--ocean-dark)]/60">APR</p>
                   </div>
                   <div className="text-center">
-                    <p className="text-sm font-medium">${(opp.tvl/1000000).toFixed(1)}M</p>
+                    <p className="text-sm font-medium">
+                      {opp.tvl > 0 ? `$${(opp.tvl/1000000).toFixed(1)}M` : 'TBA'}
+                    </p>
                     <p className="text-xs text-[var(--ocean-dark)]/60">TVL</p>
                   </div>
                   <div className="flex justify-end">
@@ -87,11 +84,17 @@ export function YieldAggregation() {
                       variant="outline"
                       size="sm"
                       className="border-[var(--ocean-dark)] text-[var(--ocean-dark)]"
+                      disabled={opp.tvl === 0}
                     >
                       Farm Now 🌾
                     </Button>
                   </div>
                 </div>
+                {opp.recommended && (
+                  <div className="mt-2 text-xs text-[var(--coral)] font-medium">
+                    🤖 Eliza Recommends: Bonza opportunity for yield farming!
+                  </div>
+                )}
               </div>
             ))}
           </div>
