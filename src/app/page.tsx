@@ -1,8 +1,14 @@
-import Image from 'next/image'
+'use client'
+
 import Link from 'next/link'
+import Image from 'next/image'
 import { Button } from "@/components/ui/button"
 
 export default function LandingPage() {
+  const handleCopyAddress = () => {
+    navigator.clipboard.writeText("DeFiVh2Ry5vEoKHqKhUwKbHzJ1ZrXbXdLbomQPbZxQrt")
+  }
+
   return (
     <main className="min-h-screen bg-gradient-to-b from-[var(--ocean-light)]/20 to-[var(--sand-light)]/30">
       {/* Hero Section */}
@@ -62,6 +68,39 @@ export default function LandingPage() {
             <p className="text-[var(--ocean-dark)]/70">
               Join a vibrant community of DeFi enthusiasts and AI explorers
             </p>
+          </div>
+        </div>
+
+        {/* Footer Info */}
+        <div className="mt-24 text-center space-y-4">
+          <div className="flex items-center justify-center gap-2">
+            <span className="text-[var(--ocean-dark)]/60">Powered by</span>
+            <a 
+              href="https://birdeye.so/token/DeFiVh2Ry5vEoKHqKhUwKbHzJ1ZrXbXdLbomQPbZxQrt"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[var(--coral)] hover:opacity-80 transition-opacity font-medium"
+            >
+              $DEFAI
+            </a>
+          </div>
+          <div className="flex items-center justify-center gap-2 text-sm">
+            <span className="text-[var(--ocean-dark)]/40">Contract:</span>
+            <a 
+              href="https://solscan.io/token/DeFiVh2Ry5vEoKHqKhUwKbHzJ1ZrXbXdLbomQPbZxQrt"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-mono text-[var(--ocean-dark)]/60 hover:text-[var(--ocean-dark)] transition-colors"
+            >
+              DeFiVh2Ry5vEoKHqKhUwKbHzJ1ZrXbXdLbomQPbZxQrt
+            </a>
+            <button 
+              onClick={handleCopyAddress}
+              className="text-[var(--ocean-dark)]/40 hover:text-[var(--ocean-dark)] transition-colors"
+              title="Copy address"
+            >
+              📋
+            </button>
           </div>
         </div>
       </div>
