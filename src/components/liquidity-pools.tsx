@@ -19,128 +19,128 @@ const INITIAL_POOLS: Pool[] = [
     name: 'AICC/DEFAI',
     token0: 'AICC',
     token1: 'DEFAI',
-    tvl: 250000,
-    apr: 42.5
+    tvl: 0,
+    apr: 0
   },
   {
     id: 'defai-anon',
     name: 'DEFAI/ANON',
     token0: 'DEFAI',
     token1: 'ANON',
-    tvl: 165000,
-    apr: 33.7
+    tvl: 0,
+    apr: 0
   },
   {
     id: 'defai-ai16z',
     name: 'DEFAI/AI16Z',
     token0: 'DEFAI',
     token1: 'AI16Z',
-    tvl: 320000,
-    apr: 48.6
+    tvl: 0,
+    apr: 0
   },
   {
     id: 'sol-defai',
     name: 'SOL/DEFAI',
     token0: 'SOL',
     token1: 'DEFAI',
-    tvl: 280000,
-    apr: 45.2
+    tvl: 0,
+    apr: 0
   },
   {
     id: 'defai-tank',
     name: 'DEFAI/TANK',
     token0: 'DEFAI',
     token1: 'TANK',
-    tvl: 175000,
-    apr: 34.9
+    tvl: 0,
+    apr: 0
   },
   {
     id: 'defai-animonica',
     name: 'DEFAI/ANIMONICA',
     token0: 'DEFAI',
     token1: 'ANIMONICA',
-    tvl: 155000,
-    apr: 32.8
+    tvl: 0,
+    apr: 0
   },
   {
     id: 'defai-project89',
     name: 'DEFAI/P89',
     token0: 'DEFAI',
     token1: 'P89',
-    tvl: 185000,
-    apr: 36.4
+    tvl: 0,
+    apr: 0
   },
   {
     id: 'defai-afi',
     name: 'DEFAI/AFI',
     token0: 'DEFAI',
     token1: 'AFI',
-    tvl: 195000,
-    apr: 37.6
+    tvl: 0,
+    apr: 0
   },
   {
     id: 'defai-shaw',
     name: 'DEFAI/SHAW',
     token0: 'DEFAI',
     token1: 'SHAW',
-    tvl: 210000,
-    apr: 39.8
+    tvl: 0,
+    apr: 0
   },
   {
     id: 'defai-alice',
     name: 'DEFAI/ALICE',
     token0: 'DEFAI',
     token1: 'ALICE',
-    tvl: 145000,
-    apr: 31.2
+    tvl: 0,
+    apr: 0
   },
   {
     id: 'pengu-defai',
     name: 'PENGU/DEFAI',
     token0: 'PENGU',
     token1: 'DEFAI',
-    tvl: 195000,
-    apr: 37.6
+    tvl: 0,
+    apr: 0
   },
   {
     id: 'ai16z-eliza',
     name: 'AI16Z/ELIZA',
     token0: 'AI16Z',
     token1: 'ELIZA',
-    tvl: 290000,
-    apr: 46.5
+    tvl: 0,
+    apr: 0
   },
   {
     id: 'ai16z-degenai',
     name: 'AI16Z/DEGENAI',
     token0: 'AI16Z',
     token1: 'DEGENAI',
-    tvl: 270000,
-    apr: 44.3
+    tvl: 0,
+    apr: 0
   },
   {
     id: 'eliza-degenai',
     name: 'ELIZA/DEGENAI',
     token0: 'ELIZA',
     token1: 'DEGENAI',
-    tvl: 230000,
-    apr: 41.2
+    tvl: 0,
+    apr: 0
   },
   {
     id: 'defai-aioraai',
     name: 'DEFAI/AIORAAI',
     token0: 'DEFAI',
     token1: 'AIORAAI',
-    tvl: 185000,
-    apr: 36.4
+    tvl: 0,
+    apr: 0
   },
   {
     id: 'ai16z-aioraai',
     name: 'AI16Z/AIORAAI',
     token0: 'AI16Z',
     token1: 'AIORAAI',
-    tvl: 240000,
-    apr: 42.1
+    tvl: 0,
+    apr: 0
   }
 ];
 
@@ -159,15 +159,15 @@ export function LiquidityPools() {
               <span className="text-3xl">🐚</span>
             </div>
             
-            <div>
+            <div className="w-full">
               <h3 className="font-bold text-[var(--ocean-dark)]">{pool.name}</h3>
-              <div className="space-y-1 mt-2">
-                <p className="text-sm text-[var(--ocean-dark)]/60">
-                  TVL: ${pool.tvl.toLocaleString()}
-                </p>
-                <p className="text-sm text-[var(--ocean-dark)]/60">
-                  APR: {pool.apr}% 🌊
-                </p>
+              <div className="space-y-2 mt-2">
+                <div className="w-full">
+                  <div className="h-4 bg-[var(--ocean-light)]/10 rounded animate-pulse" />
+                </div>
+                <div className="w-full">
+                  <div className="h-4 bg-[var(--ocean-light)]/10 rounded animate-pulse" />
+                </div>
               </div>
             </div>
 
@@ -175,6 +175,7 @@ export function LiquidityPools() {
               <Button 
                 variant="outline" 
                 size="sm"
+                disabled
                 className="border-[var(--ocean-light)]/40 text-[var(--ocean-dark)] 
                          hover:bg-[var(--ocean-light)]/10 transition-colors text-xs"
               >
@@ -183,6 +184,7 @@ export function LiquidityPools() {
               <Button 
                 variant="outline"
                 size="sm"
+                disabled
                 className="border-[var(--ocean-light)]/40 text-[var(--ocean-dark)]
                          hover:bg-[var(--ocean-light)]/10 transition-colors text-xs"
               >
