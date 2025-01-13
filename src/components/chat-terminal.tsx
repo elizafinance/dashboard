@@ -3,6 +3,11 @@
 import { useState, useRef, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 
+const PROMO_CODES = [
+  '950MXOCG', 'QEQWUKJU', 'J04LB01Y', 'XQL05M5I', '1AX2GI3G',
+  '6GOUHLDY', '2XXVHT59', 'DCX2NJ7B', '1XU4QLJI', 'ZDX522MK', '2WJFDVYD'
+];
+
 export function ChatTerminal() {
   return (
     <div className="w-full max-w-4xl mb-8 border border-gray-800 rounded-lg overflow-hidden bg-black">
@@ -19,6 +24,7 @@ export function ChatTerminal() {
         <div className="text-gray-400">
           <p className="mb-2">😴 Eliza is currently sleeping...</p>
           <p>Our DeFAI Teller is under maintenance and will return soon with improved capabilities!</p>
+          <p className="mt-4 text-xs">When we're back, chat with me to discover special Mee.Fun promo codes!</p>
         </div>
       </div>
 

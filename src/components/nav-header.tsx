@@ -1,6 +1,7 @@
 'use client'
 
 import { ExternalLink } from 'lucide-react'
+import Link from 'next/link'
 
 export function NavHeader() {
   return (
@@ -10,19 +11,26 @@ export function NavHeader() {
           Eliza.Finance
         </a>
         <nav className="flex items-center gap-4">
-          <a 
-            href="https://elizaos.ai" 
-            className="text-gray-300 font-medium text-sm hover:bg-gray-800 px-3 py-1.5 rounded-xl"
+          <Link 
+            href="/"
+            className="text-gray-400 hover:text-gray-300 transition-colors"
           >
-            ElizaOS
-          </a>
+            Home
+          </Link>
+          <Link 
+            href="/pools"
+            className="text-gray-400 hover:text-gray-300 transition-colors"
+          >
+            Pools
+          </Link>
           <a 
-            href="https://ai16z.github.io/eliza/" 
+            href="https://ai16z.xyz"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gray-300 font-medium text-sm hover:bg-gray-800 px-3 py-1.5 rounded-xl"
+            className="text-gray-400 hover:text-gray-300 transition-colors flex items-center gap-1"
           >
             Eliza
+            <ExternalLink size={14} />
           </a>
           <span className="text-[#ff6b35] font-medium text-sm px-3 py-1.5">
             Tribute
