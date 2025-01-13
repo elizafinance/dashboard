@@ -51,7 +51,7 @@ export function OpportunityDiscovery() {
           marketCap: 2500000,
           volume: { h24: 150000 },
           socials: {
-            twitter: 'ai16z_dao',
+            twitter: 'ai16zdao',
           telegram: 'ai16z_community'
         },
         tags: ['DAO', 'AI', 'Governance']
