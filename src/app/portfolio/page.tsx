@@ -79,13 +79,13 @@ export default function PortfolioPage() {
         </h1>
 
         <Tabs defaultValue="overview" className="space-y-4">
-          <TabsList>
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="optimization">Optimization</TabsTrigger>
-            <TabsTrigger value="yield">Yield Farming</TabsTrigger>
-            <TabsTrigger value="trades">Trades & Swaps</TabsTrigger>
-            <TabsTrigger value="lending">Lending</TabsTrigger>
-            <TabsTrigger value="discovery">Discovery</TabsTrigger>
+          <TabsList className="overflow-x-auto flex w-full justify-start sm:justify-center p-1 gap-1">
+            <TabsTrigger value="overview" className="text-sm sm:text-base whitespace-nowrap">Overview</TabsTrigger>
+            <TabsTrigger value="optimization" className="text-sm sm:text-base whitespace-nowrap">Optimization</TabsTrigger>
+            <TabsTrigger value="yield" className="text-sm sm:text-base whitespace-nowrap">Yield Farming</TabsTrigger>
+            <TabsTrigger value="trades" className="text-sm sm:text-base whitespace-nowrap">Trades & Swaps</TabsTrigger>
+            <TabsTrigger value="lending" className="text-sm sm:text-base whitespace-nowrap">Lending</TabsTrigger>
+            <TabsTrigger value="discovery" className="text-sm sm:text-base whitespace-nowrap">Discovery</TabsTrigger>
           </TabsList>
 
           <TabsContent value="overview">

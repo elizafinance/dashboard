@@ -104,7 +104,9 @@ export function NavHeader() {
         {isMenuOpen && (
           <div className="absolute top-full left-0 right-0 bg-white/95 backdrop-blur-sm border-b border-[var(--ocean-light)] shadow-lg md:hidden z-50">
             <nav className="container max-w-[90vw] mx-auto py-4 px-6 flex flex-col gap-4">
-              <NavLinks className="flex flex-col gap-3 text-[var(--ocean-dark)]" />
+              <div className="flex flex-col gap-3 text-[var(--ocean-dark)]">
+                <NavLinks />
+              </div>
               <div className="pt-2 border-t border-[var(--ocean-light)]/20">
                 <WalletButton />
               </div>

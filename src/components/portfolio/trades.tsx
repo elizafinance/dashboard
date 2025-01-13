@@ -58,32 +58,32 @@ export function TradesAndSwaps() {
             <div className="h-24 bg-[var(--ocean-light)]/10 rounded animate-pulse" />
           </div>
         ) : (
-          <div className="space-y-4">
+          <div className="grid grid-cols-1 gap-3 sm:gap-4">
             {opportunities.map((opp, index) => (
               <div 
                 key={index}
-                className="bg-white/80 p-4 rounded-lg border border-[var(--ocean-light)]/20"
+                className="bg-white/80 p-3 sm:p-4 rounded-lg border border-[var(--ocean-light)]/20"
               >
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 items-center">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
                   <div>
                     <h3 className="font-semibold text-[var(--ocean-dark)]">{opp.pair}</h3>
-                    <span className="text-xs px-2 py-1 rounded-full bg-[var(--ocean-light)]/10">
+                    <span className="text-xs px-2 py-1 rounded-full bg-[var(--ocean-light)]/10 inline-block mt-1">
                       {opp.type}
                     </span>
                   </div>
-                  <div className="text-center">
-                    <p className="text-2xl font-bold text-[var(--coral)]">+{opp.expectedReturn}%</p>
+                  <div className="text-left sm:text-center">
+                    <p className="text-xl sm:text-2xl font-bold text-[var(--coral)]">+{opp.expectedReturn}%</p>
                     <p className="text-xs text-[var(--ocean-dark)]/60">Expected Return</p>
                   </div>
-                  <div className="text-center">
+                  <div className="text-left sm:text-center">
                     <p className="text-sm font-medium">{opp.confidence}%</p>
                     <p className="text-xs text-[var(--ocean-dark)]/60">Confidence</p>
                   </div>
-                  <div className="flex justify-end">
+                  <div className="flex justify-start sm:justify-end mt-2 sm:mt-0">
                     <Button 
                       variant="outline"
                       size="sm"
-                      className="border-[var(--ocean-dark)] text-[var(--ocean-dark)]"
+                      className="w-full sm:w-auto border-[var(--ocean-dark)] text-[var(--ocean-dark)]"
                     >
                       Execute Trade 🏄‍♂️
                     </Button>

@@ -36,27 +36,27 @@ export function PortfolioOverview() {
 
   return (
     <div className="grid gap-4">
-      <Card className="p-6">
-        <h2 className="text-2xl font-bold text-[var(--ocean-dark)] mb-4">
+      <Card className="p-4 sm:p-6">
+        <h2 className="text-xl sm:text-2xl font-bold text-[var(--ocean-dark)] mb-4">
           Portfolio Summary
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-[var(--ocean-light)]/10 p-4 rounded-lg">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+          <div className="bg-[var(--ocean-light)]/10 p-3 sm:p-4 rounded-lg">
             <p className="text-sm text-[var(--ocean-dark)]/60">Total Value</p>
-            <p className="text-2xl font-bold text-[var(--ocean-dark)]">
+            <p className="text-xl sm:text-2xl font-bold text-[var(--ocean-dark)]">
               Loading...
             </p>
           </div>
         </div>
       </Card>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Card className="p-6">
-          <h3 className="text-xl font-bold text-[var(--ocean-dark)] mb-4">
+      <div className="grid grid-cols-1 gap-4">
+        <Card className="p-4 sm:p-6">
+          <h3 className="text-lg sm:text-xl font-bold text-[var(--ocean-dark)] mb-3 sm:mb-4">
             Eliza's Recommendations 🤖
           </h3>
-          <div className="space-y-4">
-            <p className="text-[var(--ocean-dark)]/70">
+          <div className="space-y-3 sm:space-y-4">
+            <p className="text-sm sm:text-base text-[var(--ocean-dark)]/70">
               I'm analyzing your portfolio... Stay tuned for some ripper recommendations!
             </p>
           </div>
