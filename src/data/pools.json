@@ -135,6 +135,23 @@
       "token1": "AIORAAI",
       "tvl": 0,
       "apr": 0
+    },
+    {
+      "id": "defai-cbtc",
+      "name": "DEFAI/cBTC",
+      "token0": "DEFAI",
+      "token1": "cBTC",
+      "tvl": 0,
+      "apr": 0
+    },
+    {
+      "id": "defai-lox",
+      "name": "DEFAI/LOX",
+      "token0": "DEFAI",
+      "token1": "LOX",
+      "tvl": 0,
+      "apr": 0
     }
+    
   ]
 } 
