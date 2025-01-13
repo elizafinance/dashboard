@@ -102,9 +102,9 @@ export function NavHeader() {
 
         {/* Mobile Menu Dropdown */}
         {isMenuOpen && (
-          <div className="absolute top-[72px] left-0 right-0 bg-gradient-to-br from-[var(--sand-light)] to-[var(--shell)] border-b border-[var(--ocean-light)] md:hidden">
-            <nav className="flex flex-col gap-4 p-4 container max-w-[95vw] mx-auto">
-              <NavLinks />
+          <div className="absolute top-full left-0 right-0 bg-white/95 backdrop-blur-sm border-b border-[var(--ocean-light)] shadow-lg md:hidden z-50">
+            <nav className="container max-w-[90vw] mx-auto py-4 px-6 flex flex-col gap-4">
+              <NavLinks className="flex flex-col gap-3 text-[var(--ocean-dark)]" />
               <div className="pt-2 border-t border-[var(--ocean-light)]/20">
                 <WalletButton />
               </div>
