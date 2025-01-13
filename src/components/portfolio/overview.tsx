@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react'
 import { Card } from "@/components/ui/card"
 import { useWallet } from '@solana/wallet-adapter-react'
-import { formatCurrency } from '@/lib/utils'
 
 interface PortfolioStats {
   totalValue: number
@@ -58,7 +57,7 @@ export function PortfolioOverview() {
           </h3>
           <div className="space-y-4">
             <p className="text-[var(--ocean-dark)]/70">
-              G'day! I'm analyzing your portfolio... Stay tuned for some ripper recommendations!
+              I'm analyzing your portfolio... Stay tuned for some ripper recommendations!
             </p>
           </div>
         </Card>

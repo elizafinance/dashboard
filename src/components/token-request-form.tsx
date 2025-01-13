@@ -123,7 +123,7 @@ export function TokenRequestForm() {
               name="contactEmail"
               type="email"
               required
-              placeholder="g'day@example.com"
+              placeholder="eliza@example.com"
               className="border-[var(--ocean-light)]"
             />
           </div>

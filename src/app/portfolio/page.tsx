@@ -49,7 +49,7 @@ export default function PortfolioPage() {
       <main className="container max-w-[95vw] mx-auto p-8">
         <div className="max-w-2xl mx-auto text-center">
           <h1 className="text-4xl font-bold text-[var(--ocean-dark)] mb-6">
-            G'day! Connect Your Wallet 🏄‍♂️
+            Connect Your Wallet 🏄‍♂️
           </h1>
           <p className="text-[var(--ocean-dark)]/70 mb-8">
             Connect your wallet to access Eliza's ripper portfolio management tools

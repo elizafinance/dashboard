@@ -1,5 +1,4 @@
 import { LiquidityPools } from "@/components/liquidity-pools";
-import { TokenRequestForm } from "@/components/token-request-form";
 
 export default function PoolsPage() {
   return (
@@ -32,11 +31,6 @@ export default function PoolsPage() {
               </p>
             </div>
           </div>
-        </div>
-
-        {/* Token Request Form */}
-        <div className="max-w-2xl mx-auto mt-12">
-          <TokenRequestForm />
         </div>
         
         {/* Pools Grid with Opacity */}

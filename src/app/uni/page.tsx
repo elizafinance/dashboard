@@ -42,7 +42,7 @@ export default function UniPage() {
     setLessons([
       {
         title: "Understanding DeFi Liquidity Pools",
-        description: "G'day mate! Let's dive into how liquidity pools work and why they're important...",
+        description: "Let's dive into how liquidity pools work and why they're important...",
         difficulty: 'Beginner',
         topics: ['AMMs', 'Impermanent Loss', 'Yield Farming'],
         duration: '15 mins'

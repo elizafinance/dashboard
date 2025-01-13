@@ -28,7 +28,7 @@ export default function LandingPage() {
               href="/how-it-works"
               className="inline-block text-[var(--ocean-dark)] hover:text-[var(--coral)] mb-6 transition-colors"
             >
-              Learn How it Works 🔍
+              How it Works 🔍
             </Link>
 
             {/* Contract Address Card */}
@@ -74,7 +74,7 @@ export default function LandingPage() {
                       variant="outline" 
                       className="w-full border-[var(--ocean-dark)] text-[var(--ocean-dark)] px-6 py-4 text-base"
                     >
-                      Chat with Eliza 💬
+                      Chat 💬
                     </Button>
                   </a>
                   <a 
@@ -86,7 +86,7 @@ export default function LandingPage() {
                       variant="outline" 
                       className="w-full border-[var(--coral)] text-[var(--coral)] hover:bg-[var(--coral)]/10 px-6 py-4 text-base"
                     >
-                      Create Eliza 🤖
+                      Create 🤖
                     </Button>
                   </a>
                 </div>
