@@ -1,11 +1,51 @@
 'use client'
 
-import { ExternalLink } from 'lucide-react'
+import { ExternalLink, Menu, X } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
+import { Button } from "@/components/ui/button"
+import { useState } from 'react'
 
 export function NavHeader() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  const NavLinks = () => (
+    <>
+      <Link 
+        href="/"
+        className="text-[var(--ocean-dark)] hover:text-[var(--ocean-light)] transition-colors"
+        onClick={() => setIsMenuOpen(false)}
+      >
+        Home
+      </Link>
+      <Link 
+        href="/pools"
+        className="text-[var(--ocean-dark)] hover:text-[var(--ocean-light)] transition-colors flex items-center gap-1"
+        onClick={() => setIsMenuOpen(false)}
+      >
+        Pools <span className="text-lg">🌊</span>
+      </Link>
+      <Link 
+        href="/chat"
+        className="text-[var(--ocean-dark)] hover:text-[var(--ocean-light)] transition-colors flex items-center gap-1"
+        onClick={() => setIsMenuOpen(false)}
+      >
+        Chat <span className="text-lg">💬</span>
+      </Link>
+      <a 
+        href="https://ai16z.xyz"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-[var(--ocean-dark)] hover:text-[var(--ocean-light)] transition-colors flex items-center gap-1"
+        onClick={() => setIsMenuOpen(false)}
+      >
+        Eliza
+        <ExternalLink size={14} />
+      </a>
+    </>
+  )
+
   return (
     <header className="w-full border-b border-[var(--ocean-light)] bg-gradient-to-r from-[var(--sand-dark)] to-[var(--sand-light)]">
       <div className="container max-w-[95vw] mx-auto px-4 py-3 flex items-center justify-between">
@@ -22,30 +62,40 @@ export function NavHeader() {
             <span className="text-2xl">🏖️</span>
           </span>
         </Link>
-        <nav className="flex items-center gap-4">
-          <Link 
-            href="/"
-            className="text-[var(--ocean-dark)] hover:text-[var(--ocean-light)] transition-colors"
-          >
-            Home
-          </Link>
-          <Link 
-            href="/pools"
-            className="text-[var(--ocean-dark)] hover:text-[var(--ocean-light)] transition-colors flex items-center gap-1"
-          >
-            Pools <span className="text-lg">🌊</span>
-          </Link>
-          <a 
-            href="https://ai16z.xyz"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[var(--ocean-dark)] hover:text-[var(--ocean-light)] transition-colors flex items-center gap-1"
-          >
-            Eliza
-            <ExternalLink size={14} />
-          </a>
+
+        {/* Desktop Navigation */}
+        <nav className="hidden md:flex items-center gap-4">
+          <NavLinks />
           <WalletMultiButton className="phantom-button" />
         </nav>
+
+        {/* Mobile Navigation */}
+        <div className="flex items-center gap-2 md:hidden">
+          <Button 
+            variant="outline" 
+            size="icon" 
+            className="border-[var(--ocean-light)]"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            {isMenuOpen ? (
+              <X className="h-5 w-5 text-[var(--ocean-dark)]" />
+            ) : (
+              <Menu className="h-5 w-5 text-[var(--ocean-dark)]" />
+            )}
+          </Button>
+        </div>
+
+        {/* Mobile Menu Dropdown */}
+        {isMenuOpen && (
+          <div className="absolute top-[72px] left-0 right-0 bg-gradient-to-br from-[var(--sand-light)] to-[var(--shell)] border-b border-[var(--ocean-light)] md:hidden">
+            <nav className="flex flex-col gap-4 p-4 container max-w-[95vw] mx-auto">
+              <NavLinks />
+              <div className="pt-2 border-t border-[var(--ocean-light)]/20">
+                <WalletMultiButton className="phantom-button w-full justify-center !py-3" />
+              </div>
+            </nav>
+          </div>
+        )}
       </div>
     </header>
   )
