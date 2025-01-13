@@ -33,16 +33,21 @@ export function NavHeader() {
       >
         Chat <span className="text-lg">💬</span>
       </Link>
-      <a 
-        href="https://ai16z.xyz"
-        target="_blank"
-        rel="noopener noreferrer"
+      <Link 
+        href="/uni"
         className="text-[var(--ocean-dark)] hover:text-[var(--ocean-light)] transition-colors flex items-center gap-1"
         onClick={() => setIsMenuOpen(false)}
       >
-        Eliza
-        <ExternalLink size={14} />
-      </a>
+        University <span className="text-lg">💬</span>
+      </Link>
+      <Link 
+        href="/portfolio"
+        className="text-[var(--ocean-dark)] hover:text-[var(--ocean-light)] transition-colors flex items-center gap-1"
+        onClick={() => setIsMenuOpen(false)}
+      >
+        Portfolio <span className="text-lg">💬</span>
+      </Link>
+      
     </>
   )
 
