@@ -37,6 +37,28 @@ export function YieldAggregation() {
 
   return (
     <div className="grid gap-4">
+      <Card className="p-4 sm:p-6 bg-gradient-to-r from-[var(--ocean-light)]/5 to-[var(--coral)]/5">
+        <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+          <div>
+            <h3 className="font-medium text-[var(--ocean-dark)]">Prepare for Launch! 🚀</h3>
+            <p className="text-sm text-[var(--ocean-dark)]/60">
+              Lock your LP tokens on Raydium to be ready for our yield farming pools
+            </p>
+          </div>
+          <a 
+            href="https://raydium.io/liquidity-pools/?token=5LGyBHMMPwzMunxhcBMn6ZWAuqoHUQmcFiboTJidFURP"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full sm:w-auto"
+          >
+            <Button 
+              className="w-full sm:w-auto bg-[var(--ocean-dark)] hover:bg-[var(--ocean-light)] text-white"
+            >
+              Lock LP on Raydium 🏊‍♂️
+            </Button>
+          </a>
+        </div>
+      </Card>
       <Card className="p-6">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-[var(--ocean-dark)]">

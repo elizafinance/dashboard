@@ -1,4 +1,5 @@
 import { LiquidityPools } from "@/components/liquidity-pools";
+import { Button } from "@/components/ui/button";
 
 export default function PoolsPage() {
   return (
@@ -22,14 +23,28 @@ export default function PoolsPage() {
 
         {/* Coming Soon Banner */}
         <div className="max-w-2xl mx-auto mb-8 sm:mb-12 bg-gradient-to-r from-[var(--ocean-light)]/10 to-[var(--coral)]/10 rounded-lg p-4 border border-[var(--ocean-light)]/20 mx-4 sm:mx-auto">
-          <div className="flex items-center gap-3">
-            <span className="text-xl sm:text-2xl">🐚</span>
-            <div>
-              <h3 className="font-medium text-[var(--ocean-dark)]">She's Coming Soon, Mate</h3>
-              <p className="text-sm text-[var(--ocean-dark)]/60">
-                Our vaults are still collecting shells at the billabong. No worries, stay tuned!
-              </p>
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center gap-3">
+              <span className="text-xl sm:text-2xl">🐚</span>
+              <div>
+                <h3 className="font-medium text-[var(--ocean-dark)]">She's Coming Soon, Mate</h3>
+                <p className="text-sm text-[var(--ocean-dark)]/60">
+                  Our vaults are still collecting shells at the billabong. No worries, stay tuned!
+                </p>
+              </div>
             </div>
+            <a 
+              href="https://raydium.io/liquidity-pools/?token=5LGyBHMMPwzMunxhcBMn6ZWAuqoHUQmcFiboTJidFURP"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto"
+            >
+              <Button 
+                className="w-full sm:w-auto bg-[var(--ocean-dark)] hover:bg-[var(--ocean-light)] text-white"
+              >
+                Lock LP Now on Raydium 🏊‍♂️
+              </Button>
+            </a>
           </div>
         </div>
         

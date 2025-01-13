@@ -7,26 +7,16 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Eliza.Finance',
-  description: 'DeFAI at your fingertips',
-  openGraph: {
-    title: 'Eliza.Finance',
-    description: 'DeFAI at your fingertips',
-    images: [
+  title: 'Eliza.Finance 🌊',
+  description: 'AI-Powered DeFi on Solana',
+  icons: {
+    icon: [
       {
-        url: '/sisters.webp',
-        width: 1200,
-        height: 630,
-        alt: 'Eliza Finance Sisters'
-      }
-    ]
+        url: 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌊</text></svg>',
+        type: 'image/svg+xml',
+      },
+    ],
   },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Eliza.Finance',
-    description: 'DeFAI at your fingertips',
-    images: ['/sisters.webp']
-  }
 }
 
 export default function RootLayout({
@@ -36,6 +26,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <link
+          rel="icon"
+          href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌊</text></svg>"
+          type="image/svg+xml"
+        />
+      </head>
       <body className={inter.className}>
         <SolanaWalletProvider>
           <NavHeader />
