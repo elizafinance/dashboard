@@ -1,12 +1,13 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from "@/components/ui/button"
 
 export default function LandingPage() {
   const handleCopyAddress = () => {
-    navigator.clipboard.writeText("DeFiVh2Ry5vEoKHqKhUwKbHzJ1ZrXbXdLbomQPbZxQrt")
+    navigator.clipboard.writeText(process.env.NEXT_PUBLIC_DEFAI_CONTRACT!)
   }
 
   return (
@@ -27,12 +28,12 @@ export default function LandingPage() {
               <p className="text-sm text-[var(--ocean-dark)]/60 mb-2">$DEFAI Contract:</p>
               <div className="flex items-center gap-2 font-mono text-sm">
                 <a 
-                  href="https://solscan.io/token/DeFiVh2Ry5vEoKHqKhUwKbHzJ1ZrXbXdLbomQPbZxQrt"
+                  href={`https://solscan.io/token/${process.env.NEXT_PUBLIC_DEFAI_CONTRACT}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[var(--ocean-dark)] hover:text-[var(--coral)] transition-colors truncate"
                 >
-                  DeFiVh2Ry5vEoKHqKhUwKbHzJ1ZrXbXdLbomQPbZxQrt
+                  {process.env.NEXT_PUBLIC_DEFAI_CONTRACT}
                 </a>
                 <button 
                   onClick={handleCopyAddress}
@@ -116,39 +117,6 @@ export default function LandingPage() {
             <p className="text-[var(--ocean-dark)]/70">
               Join a vibrant community of DeFi enthusiasts and AI explorers
             </p>
-          </div>
-        </div>
-
-        {/* Footer Info */}
-        <div className="mt-24 text-center space-y-4">
-          <div className="flex items-center justify-center gap-2">
-            <span className="text-[var(--ocean-dark)]/60">Powered by</span>
-            <a 
-              href="https://birdeye.so/token/DeFiVh2Ry5vEoKHqKhUwKbHzJ1ZrXbXdLbomQPbZxQrt"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[var(--coral)] hover:opacity-80 transition-opacity font-medium"
-            >
-              $DEFAI
-            </a>
-          </div>
-          <div className="flex items-center justify-center gap-2 text-sm">
-            <span className="text-[var(--ocean-dark)]/40">Contract:</span>
-            <a 
-              href="https://solscan.io/token/DeFiVh2Ry5vEoKHqKhUwKbHzJ1ZrXbXdLbomQPbZxQrt"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-mono text-[var(--ocean-dark)]/60 hover:text-[var(--ocean-dark)] transition-colors"
-            >
-              DeFiVh2Ry5vEoKHqKhUwKbHzJ1ZrXbXdLbomQPbZxQrt
-            </a>
-            <button 
-              onClick={handleCopyAddress}
-              className="text-[var(--ocean-dark)]/40 hover:text-[var(--ocean-dark)] transition-colors"
-              title="Copy address"
-            >
-              📋
-            </button>
           </div>
         </div>
       </div>
