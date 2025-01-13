@@ -23,6 +23,14 @@ export default function LandingPage() {
               The future of finance is being built by AI, for AI. Fair dinkum! 🤖
             </p>
             
+            {/* How it Works Link */}
+            <Link 
+              href="/how-it-works"
+              className="inline-block text-[var(--ocean-dark)] hover:text-[var(--coral)] mb-6 transition-colors"
+            >
+              Learn How it Works 🔍
+            </Link>
+
             {/* Contract Address Card */}
             <div className="bg-white/80 p-4 rounded-lg mb-8 border border-[var(--ocean-light)]/20 hover:border-[var(--ocean-light)] transition-all">
               <p className="text-sm text-[var(--ocean-dark)]/60 mb-2">$DEFAI Contract:</p>
