@@ -14,10 +14,10 @@ export default function PoolsPage() {
       {/* Main Content */}
       <div className="relative pt-12 pb-24">
         <h1 className="text-4xl font-bold text-center mb-2 text-[var(--ocean-dark)]">
-          Shell the Vaults
+          Shell the Vaults, Mate
         </h1>
         <p className="text-center text-[var(--ocean-dark)]/60 mb-12">
-          Surf the pairs and dive into liquidity pools 🏄‍♂️
+          Crikey! Surf these bonza pairs and dive into our ripper liquidity pools 🏄‍♂️
         </p>
 
         {/* Coming Soon Banner */}
@@ -25,9 +25,9 @@ export default function PoolsPage() {
           <div className="flex items-center gap-3">
             <span className="text-2xl">🐚</span>
             <div>
-              <h3 className="font-medium text-[var(--ocean-dark)]">Coming Soon</h3>
+              <h3 className="font-medium text-[var(--ocean-dark)]">She's Coming Soon, Mate</h3>
               <p className="text-sm text-[var(--ocean-dark)]/60">
-                Our vaults are still collecting shells. Stay tuned!
+                Our vaults are still collecting shells at the billabong. No worries, stay tuned!
               </p>
             </div>
           </div>
