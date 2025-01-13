@@ -1,4 +1,4 @@
-import { Providers } from './providers'
+import { SolanaWalletProvider } from '@/components/providers/wallet-provider'
 import { Analytics } from '@/components/analytics'
 import { NavHeader } from '@/components/nav-header'
 import type { Metadata } from 'next/types'
@@ -17,11 +17,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Analytics />
-        <Providers>
+        <SolanaWalletProvider>
+          <Analytics />
           <NavHeader />
           {children}
-        </Providers>
+        </SolanaWalletProvider>
       </body>
     </html>
   )

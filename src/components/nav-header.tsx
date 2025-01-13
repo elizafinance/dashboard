@@ -2,6 +2,7 @@
 
 import { ExternalLink } from 'lucide-react'
 import Link from 'next/link'
+import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
 
 export function NavHeader() {
   return (
@@ -32,6 +33,7 @@ export function NavHeader() {
             Eliza
             <ExternalLink size={14} />
           </a>
+          <WalletMultiButton className="phantom-button" />
           <span className="text-[#ff6b35] font-medium text-sm px-3 py-1.5">
             Tribute
           </span>
