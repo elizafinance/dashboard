@@ -1,9 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useWallet } from '@solana/wallet-adapter-react'
 import { Card } from "@/components/ui/card"
+import { InviteCodeModal } from '@/components/invite-code-modal'
+import { validateInviteCode, setInviteCode, hasValidInviteCode } from '@/lib/services/invite-code'
 
 // Import portfolio components
 import { PortfolioOverview } from "@/components/portfolio/overview"
@@ -15,6 +18,31 @@ import { OpportunityDiscovery } from "@/components/portfolio/discovery"
 
 export default function PortfolioPage() {
   const { connected } = useWallet()
+  const router = useRouter()
+  const [showInviteModal, setShowInviteModal] = useState(false)
+  const [hasAccess, setHasAccess] = useState(false)
+
+  useEffect(() => {
+    const checkAccess = async () => {
+      const hasValidCode = await hasValidInviteCode()
+      setHasAccess(hasValidCode)
+      if (!hasValidCode) {
+        setShowInviteModal(true)
+      }
+    }
+    checkAccess()
+  }, [])
+
+  const handleInviteSubmit = async (code: string) => {
+    const isValid = await setInviteCode(code)
+    if (isValid) {
+      setHasAccess(true)
+      setShowInviteModal(false)
+    } else {
+      // Handle invalid code error
+      console.error('Invalid invite code')
+    }
+  }
 
   if (!connected) {
     return (
@@ -28,6 +56,16 @@ export default function PortfolioPage() {
           </p>
         </div>
       </main>
+    )
+  }
+
+  if (!hasAccess) {
+    return (
+      <InviteCodeModal
+        open={showInviteModal}
+        onOpenChange={setShowInviteModal}
+        onSubmit={handleInviteSubmit}
+      />
     )
   }
 
