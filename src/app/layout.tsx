@@ -1,23 +1,31 @@
-import { SolanaWalletProvider } from '@/components/providers/wallet-provider'
-import { Analytics } from '@/components/analytics'
+import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
 import { NavHeader } from '@/components/nav-header'
-import type { Metadata } from 'next/types'
+import { SolanaWalletProvider } from '@/components/providers/wallet-provider'
 import './globals.css'
 
+const inter = Inter({ subsets: ['latin'] })
+
 export const metadata: Metadata = {
-  title: "Eliza.Finance | AI-Powered DeFi Platform",
-  description: "Dive into the future of decentralized finance with autonomous AI agents. Join our beach-side community of DeFi explorers and discover innovative liquidity pools.",
-  keywords: "DeFi, AI, Solana, Liquidity Pools, Cryptocurrency, Autonomous Agents, Blockchain",
+  title: 'Eliza.Finance',
+  description: 'DeFAI at your fingertips',
   openGraph: {
-    title: "Eliza.Finance | AI-Powered DeFi Platform",
-    description: "Dive into the future of decentralized finance with autonomous AI agents",
-    images: ['/beach-crew.png'],
+    title: 'Eliza.Finance',
+    description: 'DeFAI at your fingertips',
+    images: [
+      {
+        url: '/sisters.webp',
+        width: 1200,
+        height: 630,
+        alt: 'Eliza Finance Sisters'
+      }
+    ]
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Eliza.Finance | AI-Powered DeFi Platform",
-    description: "Dive into the future of decentralized finance with autonomous AI agents",
-    images: ['/beach-crew.png'],
+    title: 'Eliza.Finance',
+    description: 'DeFAI at your fingertips',
+    images: ['/sisters.webp']
   }
 }
 
@@ -28,9 +36,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
+      <body className={inter.className}>
         <SolanaWalletProvider>
-          <Analytics />
           <NavHeader />
           {children}
         </SolanaWalletProvider>
