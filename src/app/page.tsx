@@ -4,17 +4,29 @@ import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from "@/components/ui/button"
+import { LeaveSiteModal } from '@/components/leave-site-modal'
 
 export default function LandingPage() {
-  const handleCopyAddress = () => {
-    navigator.clipboard.writeText(process.env.NEXT_PUBLIC_DEFAI_CONTRACT!)
+  const [modalOpen, setModalOpen] = useState(false)
+  const [pendingUrl, setPendingUrl] = useState('')
+  const [pendingSiteName, setPendingSiteName] = useState('')
+
+  const handleExternalLinkClick = (url: string, siteName: string) => {
+    setPendingUrl(url)
+    setPendingSiteName(siteName)
+    setModalOpen(true)
+  }
+
+  const handleConfirmNavigation = () => {
+    window.open(pendingUrl, '_blank', 'noopener,noreferrer')
+    setModalOpen(false)
   }
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-[var(--ocean-light)]/20 to-[var(--sand-light)]/30">
-      <div className="container max-w-[95vw] mx-auto pt-16 pb-24">
-        <div className="flex flex-col lg:flex-row items-center gap-12">
-          <div className="flex-1 text-center lg:text-left">
+      <div className="container mx-auto px-4 sm:px-6 pt-8 sm:pt-16 pb-16 sm:pb-24">
+        <div className="flex flex-col lg:flex-row items-center gap-8 sm:gap-12">
+          <div className="flex-1 text-center lg:text-left space-y-4 sm:space-y-6">
             <h1 className="text-6xl font-bold text-[var(--ocean-dark)] mb-6">
               DeFAI Summer <span className="text-[var(--coral)]">2025</span> 
             </h1>
@@ -32,8 +44,8 @@ export default function LandingPage() {
             </Link>
 
             {/* Contract Address Card */}
-            <div className="bg-white/80 p-4 rounded-lg mb-8 border border-[var(--ocean-light)]/20 hover:border-[var(--ocean-light)] transition-all">
-              <p className="text-sm text-[var(--ocean-dark)]/60 mb-2">$DEFAI Contract:</p>
+            <div className="bg-white/80 p-3 sm:p-4 rounded-lg mb-6 sm:mb-8 border border-[var(--ocean-light)]/20 hover:border-[var(--ocean-light)] transition-all">
+              <p className="text-xs sm:text-sm text-[var(--ocean-dark)]/60 mb-2">$DEFAI Contract:</p>
               <div className="flex items-center gap-2 font-mono text-sm">
                 <a 
                   href={`https://solscan.io/token/${process.env.NEXT_PUBLIC_DEFAI_CONTRACT}`}
@@ -44,7 +56,7 @@ export default function LandingPage() {
                   {process.env.NEXT_PUBLIC_DEFAI_CONTRACT}
                 </a>
                 <button 
-                  onClick={handleCopyAddress}
+                  onClick={() => handleExternalLinkClick(`https://solscan.io/token/${process.env.NEXT_PUBLIC_DEFAI_CONTRACT}`, 'DEFAI Contract')}
                   className="text-[var(--ocean-dark)]/40 hover:text-[var(--ocean-dark)] transition-colors"
                   title="Copy address"
                 >
@@ -65,30 +77,20 @@ export default function LandingPage() {
               <div className="mt-4">
                 <h3 className="text-[var(--ocean-dark)]/60 text-sm mb-3">Our Mates 🤝</h3>
                 <div className="grid grid-cols-2 gap-4">
-                  <a 
-                    href="https://elizawakesup.ai"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Button 
+                    variant="outline" 
+                    className="w-full border-[var(--ocean-dark)] text-[var(--ocean-dark)] px-6 py-4 text-base"
+                    onClick={() => handleExternalLinkClick('https://elizawakesup.ai', 'Eliza Wakes Up')}
                   >
-                    <Button 
-                      variant="outline" 
-                      className="w-full border-[var(--ocean-dark)] text-[var(--ocean-dark)] px-6 py-4 text-base"
-                    >
-                      Chat 💬
-                    </Button>
-                  </a>
-                  <a 
-                    href="https://mee.fun"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    Chat 💬
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    className="w-full border-[var(--coral)] text-[var(--coral)] hover:bg-[var(--coral)]/10 px-6 py-4 text-base"
+                    onClick={() => handleExternalLinkClick('https://mee.fun', 'Mee.Fun')}
                   >
-                    <Button 
-                      variant="outline" 
-                      className="w-full border-[var(--coral)] text-[var(--coral)] hover:bg-[var(--coral)]/10 px-6 py-4 text-base"
-                    >
-                      Create 🤖
-                    </Button>
-                  </a>
+                    Create 🤖
+                  </Button>
                 </div>
               </div>
             </div>
@@ -128,6 +130,13 @@ export default function LandingPage() {
           </div>
         </div>
       </div>
+
+      <LeaveSiteModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        onConfirm={handleConfirmNavigation}
+        siteName={pendingSiteName}
+      />
     </main>
   )
 }

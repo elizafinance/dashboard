@@ -3,9 +3,20 @@
 import { ExternalLink, Menu, X } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
+import { WalletButton } from './wallet-button'
 import { Button } from "@/components/ui/button"
 import { useState } from 'react'
+import dynamic from 'next/dynamic'
+
+// Dynamically import the WalletMultiButton with no SSR
+const WalletMultiButton = dynamic(
+  async () => (await import('@solana/wallet-adapter-react-ui')).WalletMultiButton,
+  { ssr: false }
+)
+
+export function WalletButton() {
+  return <WalletMultiButton className="phantom-button" />
+}
 
 export function NavHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -71,7 +82,7 @@ export function NavHeader() {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-4">
           <NavLinks />
-          <WalletMultiButton className="phantom-button" />
+          <WalletButton />
         </nav>
 
         {/* Mobile Navigation */}
@@ -96,7 +107,7 @@ export function NavHeader() {
             <nav className="flex flex-col gap-4 p-4 container max-w-[95vw] mx-auto">
               <NavLinks />
               <div className="pt-2 border-t border-[var(--ocean-light)]/20">
-                <WalletMultiButton className="phantom-button w-full justify-center !py-3" />
+                <WalletButton />
               </div>
             </nav>
           </div>
