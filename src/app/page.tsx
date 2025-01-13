@@ -29,11 +29,24 @@ export default function LandingPage() {
                   Explore Pools 🌊
                 </Button>
               </Link>
-              <Link href="/chat">
+              <a 
+                href="https://elizawakesup.ai"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Button variant="outline" className="border-[var(--ocean-dark)] text-[var(--ocean-dark)] px-8 py-6 text-lg">
                   Chat with Eliza 💬
                 </Button>
-              </Link>
+              </a>
+              <a 
+                href="https://mee.fun"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button variant="outline" className="border-[var(--coral)] text-[var(--coral)] hover:bg-[var(--coral)]/10 px-8 py-6 text-lg">
+                  Create Eliza 🤖
+                </Button>
+              </a>
             </div>
           </div>
 
