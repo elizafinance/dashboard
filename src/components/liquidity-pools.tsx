@@ -15,52 +15,132 @@ interface Pool {
 
 const INITIAL_POOLS: Pool[] = [
   {
-    id: 'ai16z-defai',
-    name: 'AI16Z/DEFAI',
-    token0: 'AI16Z',
+    id: 'aicc-defai',
+    name: 'AICC/DEFAI',
+    token0: 'AICC',
     token1: 'DEFAI',
     tvl: 250000,
     apr: 42.5
   },
   {
-    id: 'defai-sol',
-    name: 'DEFAI/SOL',
+    id: 'defai-anon',
+    name: 'DEFAI/ANON',
     token0: 'DEFAI',
-    token1: 'SOL',
-    tvl: 180000,
-    apr: 35.8
+    token1: 'ANON',
+    tvl: 165000,
+    apr: 33.7
   },
   {
-    id: 'eliza-defai',
-    name: 'ELIZA/DEFAI',
-    token0: 'ELIZA',
-    token1: 'DEFAI',
-    tvl: 120000,
-    apr: 28.4
-  },
-  {
-    id: 'ai16z-sol',
-    name: 'AI16Z/SOL',
-    token0: 'AI16Z',
-    token1: 'SOL',
+    id: 'defai-ai16z',
+    name: 'DEFAI/AI16Z',
+    token0: 'DEFAI',
+    token1: 'AI16Z',
     tvl: 320000,
+    apr: 48.6
+  },
+  {
+    id: 'sol-defai',
+    name: 'SOL/DEFAI',
+    token0: 'SOL',
+    token1: 'DEFAI',
+    tvl: 280000,
     apr: 45.2
   },
   {
-    id: 'eliza-sol',
-    name: 'ELIZA/SOL',
-    token0: 'ELIZA',
-    token1: 'SOL',
-    tvl: 280000,
-    apr: 38.6
+    id: 'defai-tank',
+    name: 'DEFAI/TANK',
+    token0: 'DEFAI',
+    token1: 'TANK',
+    tvl: 175000,
+    apr: 34.9
   },
   {
-    id: 'eliza-ai16z',
-    name: 'ELIZA/AI16Z',
+    id: 'defai-animonica',
+    name: 'DEFAI/ANIMONICA',
+    token0: 'DEFAI',
+    token1: 'ANIMONICA',
+    tvl: 155000,
+    apr: 32.8
+  },
+  {
+    id: 'defai-project89',
+    name: 'DEFAI/P89',
+    token0: 'DEFAI',
+    token1: 'P89',
+    tvl: 185000,
+    apr: 36.4
+  },
+  {
+    id: 'defai-afi',
+    name: 'DEFAI/AFI',
+    token0: 'DEFAI',
+    token1: 'AFI',
+    tvl: 195000,
+    apr: 37.6
+  },
+  {
+    id: 'defai-shaw',
+    name: 'DEFAI/SHAW',
+    token0: 'DEFAI',
+    token1: 'SHAW',
+    tvl: 210000,
+    apr: 39.8
+  },
+  {
+    id: 'defai-alice',
+    name: 'DEFAI/ALICE',
+    token0: 'DEFAI',
+    token1: 'ALICE',
+    tvl: 145000,
+    apr: 31.2
+  },
+  {
+    id: 'pengu-defai',
+    name: 'PENGU/DEFAI',
+    token0: 'PENGU',
+    token1: 'DEFAI',
+    tvl: 195000,
+    apr: 37.6
+  },
+  {
+    id: 'ai16z-eliza',
+    name: 'AI16Z/ELIZA',
+    token0: 'AI16Z',
+    token1: 'ELIZA',
+    tvl: 290000,
+    apr: 46.5
+  },
+  {
+    id: 'ai16z-degenai',
+    name: 'AI16Z/DEGENAI',
+    token0: 'AI16Z',
+    token1: 'DEGENAI',
+    tvl: 270000,
+    apr: 44.3
+  },
+  {
+    id: 'eliza-degenai',
+    name: 'ELIZA/DEGENAI',
     token0: 'ELIZA',
-    token1: 'AI16Z',
-    tvl: 150000,
-    apr: 32.7
+    token1: 'DEGENAI',
+    tvl: 230000,
+    apr: 41.2
+  },
+  {
+    id: 'defai-aioraai',
+    name: 'DEFAI/AIORAAI',
+    token0: 'DEFAI',
+    token1: 'AIORAAI',
+    tvl: 185000,
+    apr: 36.4
+  },
+  {
+    id: 'ai16z-aioraai',
+    name: 'AI16Z/AIORAAI',
+    token0: 'AI16Z',
+    token1: 'AIORAAI',
+    tvl: 240000,
+    apr: 42.1
   }
 ];
 
