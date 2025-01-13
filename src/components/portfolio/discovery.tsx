@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { useWallet } from '@solana/wallet-adapter-react'
+import { DiscoverySettingsModal } from './discovery-settings-modal'
 
 interface TokenOpportunity {
   name: string
@@ -26,23 +27,31 @@ interface TokenOpportunity {
 }
 
 export function OpportunityDiscovery() {
-  const { publicKey } = useWallet()
-  const [loading, setLoading] = useState(true)
-  const [opportunities, setOpportunities] = useState<TokenOpportunity[]>([])
-
-  useEffect(() => {
-    // TODO: Fetch real opportunities from API
-    setOpportunities([
-      {
-        name: 'AI16Z DAO',
-        symbol: 'AI16Z',
-        address: 'Ai16Z...',
-        score: 85,
-        priceChange: { h24: 12.5 },
-        marketCap: 2500000,
-        volume: { h24: 150000 },
-        socials: {
-          twitter: 'ai16z_dao',
+    const { publicKey } = useWallet()
+    const [loading, setLoading] = useState(true)
+    const [opportunities, setOpportunities] = useState<TokenOpportunity[]>([])
+    const [showSettings, setShowSettings] = useState(false)
+    const [settings, setSettings] = useState({
+      minScore: 60,
+      minMarketCap: 1,
+      showHighRisk: false,
+      showNewTokens: true,
+      includeSocials: true
+    })
+  
+    useEffect(() => {
+      // TODO: Fetch real opportunities from API
+      setOpportunities([
+        {
+          name: 'AI16Z DAO',
+          symbol: 'AI16Z',
+          address: 'Ai16Z...',
+          score: 85,
+          priceChange: { h24: 12.5 },
+          marketCap: 2500000,
+          volume: { h24: 150000 },
+          socials: {
+            twitter: 'ai16z_dao',
           telegram: 'ai16z_community'
         },
         tags: ['DAO', 'AI', 'Governance']
@@ -86,6 +95,7 @@ export function OpportunityDiscovery() {
           <Button 
             variant="outline"
             className="border-[var(--ocean-dark)] text-[var(--ocean-dark)]"
+            onClick={() => setShowSettings(true)}
           >
             Discovery Settings 🔍
           </Button>
@@ -185,6 +195,12 @@ export function OpportunityDiscovery() {
           </div>
         )}
       </Card>
+      <DiscoverySettingsModal
+        open={showSettings}
+        onOpenChange={setShowSettings}
+        settings={settings}
+        onSettingsChange={setSettings}
+      />
     </div>
   )
 } 

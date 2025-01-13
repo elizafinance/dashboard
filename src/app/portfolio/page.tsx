@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { Card } from "@/components/ui/card"
 
@@ -27,9 +26,6 @@ export default function PortfolioPage() {
           <p className="text-[var(--ocean-dark)]/70 mb-8">
             Connect your wallet to access Eliza's ripper portfolio management tools
           </p>
-          <div className="flex justify-center">
-            <WalletMultiButton />
-          </div>
         </div>
       </main>
     )
@@ -37,12 +33,9 @@ export default function PortfolioPage() {
 
   return (
     <main className="container max-w-[95vw] mx-auto p-8">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-4xl font-bold text-[var(--ocean-dark)]">
-          Your Portfolio Dashboard
-        </h1>
-        <WalletMultiButton />
-      </div>
+      <h1 className="text-4xl font-bold text-[var(--ocean-dark)] mb-8">
+        Your Portfolio Dashboard
+      </h1>
 
       <Tabs defaultValue="overview" className="space-y-4">
         <TabsList>
