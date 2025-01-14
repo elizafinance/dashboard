@@ -36,13 +36,13 @@ export function NavHeader() {
       >
         Pools <span className="text-lg">🌊</span>
       </Link>
-      <Link 
+      {/* <Link 
         href="/swap"
         className="text-[var(--ocean-dark)] hover:text-[var(--ocean-light)] transition-colors flex items-center gap-1"
         onClick={() => setIsMenuOpen(false)}
       >
         Swap <span className="text-lg">💬</span>
-      </Link>
+      </Link> */}
       {/* <Link 
         href="/chat"
         className="text-[var(--ocean-dark)] hover:text-[var(--ocean-light)] transition-colors flex items-center gap-1"

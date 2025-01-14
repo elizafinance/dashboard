@@ -15,6 +15,7 @@ import { YieldAggregation } from "@/components/portfolio/yield"
 import { TradesAndSwaps } from "@/components/portfolio/trades"
 import { LendingDashboard } from "@/components/portfolio/lending"
 import { OpportunityDiscovery } from "@/components/portfolio/discovery"
+import { PortfolioSwaps } from "@/components/portfolio/swaps"
 
 export default function PortfolioPage() {
   const { connected } = useWallet()
@@ -81,6 +82,7 @@ export default function PortfolioPage() {
         <Tabs defaultValue="overview" className="space-y-4">
           <TabsList className="overflow-x-auto flex w-full justify-start sm:justify-center p-1 gap-1">
             <TabsTrigger value="overview" className="text-sm sm:text-base whitespace-nowrap">Overview</TabsTrigger>
+            <TabsTrigger value="swaps" className="text-sm sm:text-base whitespace-nowrap">Swaps</TabsTrigger>
             <TabsTrigger value="optimization" className="text-sm sm:text-base whitespace-nowrap">Optimization</TabsTrigger>
             <TabsTrigger value="yield" className="text-sm sm:text-base whitespace-nowrap">Yield Farming</TabsTrigger>
             <TabsTrigger value="trades" className="text-sm sm:text-base whitespace-nowrap">Trades & Swaps</TabsTrigger>
@@ -90,6 +92,9 @@ export default function PortfolioPage() {
 
           <TabsContent value="overview">
             <PortfolioOverview />
+          </TabsContent>
+          <TabsContent value="swaps">
+            <PortfolioSwaps />
           </TabsContent>
           <TabsContent value="optimization">
             <PortfolioOptimization />
