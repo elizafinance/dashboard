@@ -1,5 +1,6 @@
 import { Connection, PublicKey } from '@solana/web3.js'
 import { TokenListProvider } from '@solana/spl-token-registry'
+import { fetchTokenData } from '@/scripts/fetchTokenData'
 
 const RPC_ENDPOINTS = [
   'https://api.mainnet-beta.solana.com',
@@ -27,6 +28,22 @@ export interface PortfolioMetrics {
     capitalManagement: number
     degenIndex: number
     defiSavviness: number
+    // Portfolio Health
+    diversification: number
+    liquidityScore: number
+    riskScore: number
+    // Trading Style
+    entryScore: number
+    exitScore: number
+    gasScore: number
+    // Market Adaptation
+    trendScore: number
+    volatilityScore: number
+    alphaScore: number
+    // DeFi Engagement
+    protocolScore: number
+    yieldScore: number
+    contractScore: number
   }
   performance: {
     daily: number
@@ -37,29 +54,40 @@ export interface PortfolioMetrics {
   comparisonPercentile: number
 }
 
-export async function calculatePortfolioMetrics(walletAddress: string): Promise<PortfolioMetrics> {
+export async function calculatePortfolioMetrics(walletAddress: PublicKey): Promise<PortfolioMetrics> {
   try {
     const endpoint = await getWorkingEndpoint()
     const connection = new Connection(endpoint)
-    const pubKey = new PublicKey(walletAddress)
     
-    // Get token balances and transactions
-    const tokenAccounts = await connection.getParsedTokenAccountsByOwner(pubKey, {
+    // Get token holdings and data
+    const tokenAccounts = await connection.getParsedTokenAccountsByOwner(walletAddress, {
       programId: new PublicKey('TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA')
     })
 
-    // Get token metadata
-    const tokenListProvider = new TokenListProvider()
-    const tokenList = await tokenListProvider.resolve()
-    const tokens = tokenList.filterByClusterSlug('mainnet-beta').getList()
-
-    // Calculate metrics based on real data
-    const metrics = await analyzePortfolio(tokenAccounts, tokens)
+    // Get detailed token data using fetchTokenData script
+    const tokenData = await fetchTokenData(walletAddress.toString())
     
-    return metrics
+    // Calculate metrics based on token data
+    const defaiScore = calculateDefaiScore(tokenData)
+    const metrics = {
+      capitalManagement: calculateCapitalMetric(tokenData),
+      degenIndex: calculateDegenIndex(tokenData),
+      defiSavviness: calculateDefiMetric(tokenData)
+    }
+
+    return {
+      defaiScore,
+      metrics,
+      performance: {
+        daily: tokenData.dailyPerformance,
+        vsCMC100: tokenData.performanceVsCMC
+      },
+      topHoldings: tokenData.significantHoldings.map(h => h.token),
+      aiAnalysis: generateAnalysis(tokenData),
+      comparisonPercentile: calculatePercentile(defaiScore)
+    }
   } catch (error) {
     console.error('Error calculating portfolio metrics:', error)
-    // Return default metrics on error
     return getDefaultMetrics()
   }
 }

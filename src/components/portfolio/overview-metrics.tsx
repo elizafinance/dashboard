@@ -5,6 +5,7 @@ import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css'
 import Image from 'next/image'
 import { calculatePortfolioMetrics } from '@/lib/services/portfolio-metrics'
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
 
 interface PortfolioMetrics {
   defaiScore: number
@@ -30,16 +31,20 @@ export function OverviewMetrics() {
 
   useEffect(() => {
     const fetchMetrics = async () => {
-      if (!publicKey) return
+      if (!publicKey) {
+        setError('Please connect your wallet')
+        setLoading(false)
+        return
+      }
       
       try {
         setLoading(true)
         setError(null)
-        const data = await calculatePortfolioMetrics(publicKey.toString())
+        const data = await calculatePortfolioMetrics(publicKey)
         setMetrics(data)
       } catch (error) {
         console.error('Failed to fetch metrics:', error)
-        setError('Unable to load portfolio metrics')
+        setError('Unable to analyze portfolio')
       } finally {
         setLoading(false)
       }
@@ -81,8 +86,12 @@ export function OverviewMetrics() {
           className="rounded-full border-2 border-[var(--coral)]"
         />
         <div>
-          <h2 className="text-2xl font-bold text-[var(--ocean-dark)]">$DEFAI</h2>
-          <p className="text-sm text-[var(--ocean-dark)]/60">DEFAIDAO</p>
+          <h2 className="text-lg font-bold text-[var(--ocean-dark)] break-all">
+            {publicKey?.toString()}
+          </h2>
+          <p className="text-sm text-[var(--ocean-dark)]/60">
+            Connected Wallet
+          </p>
         </div>
       </div>
 
@@ -136,6 +145,108 @@ export function OverviewMetrics() {
         <p className="text-sm leading-relaxed text-[var(--ocean-dark)]/80">
           {metrics.aiAnalysis}
         </p>
+      </div>
+
+      {/* Additional Metrics */}
+      <div className="mt-8">
+        <Accordion type="single" collapsible>
+          <AccordionItem value="detailed-metrics">
+            <AccordionTrigger className="text-lg font-bold text-[var(--ocean-dark)]">
+              View Detailed Metrics 📊
+            </AccordionTrigger>
+            <AccordionContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
+                {/* Portfolio Health */}
+                <Card className="p-4 bg-white/80">
+                  <h3 className="text-lg font-bold text-[var(--ocean-dark)] mb-4">Portfolio Health 🏥</h3>
+                  <div className="space-y-4">
+                    <MetricBar
+                      label="Diversification Score"
+                      value={metrics?.diversification || 0}
+                      description="Based on asset distribution"
+                    />
+                    <MetricBar
+                      label="Liquidity Rating"
+                      value={metrics?.liquidityScore || 0}
+                      description="Quick exit capability"
+                    />
+                    <MetricBar
+                      label="Risk Exposure"
+                      value={metrics?.riskScore || 0}
+                      description="Overall portfolio risk"
+                    />
+                  </div>
+                </Card>
+
+                {/* Trading Behavior */}
+                <Card className="p-4 bg-white/80">
+                  <h3 className="text-lg font-bold text-[var(--ocean-dark)] mb-4">Trading Style 🎯</h3>
+                  <div className="space-y-4">
+                    <MetricBar
+                      label="Entry Timing"
+                      value={metrics?.entryScore || 0}
+                      description="Buy decision accuracy"
+                    />
+                    <MetricBar
+                      label="Exit Execution"
+                      value={metrics?.exitScore || 0}
+                      description="Sell timing effectiveness"
+                    />
+                    <MetricBar
+                      label="Gas Optimization"
+                      value={metrics?.gasScore || 0}
+                      description="Transaction cost efficiency"
+                    />
+                  </div>
+                </Card>
+
+                {/* Market Adaptation */}
+                <Card className="p-4 bg-white/80">
+                  <h3 className="text-lg font-bold text-[var(--ocean-dark)] mb-4">Market Adaptation 🌊</h3>
+                  <div className="space-y-4">
+                    <MetricBar
+                      label="Trend Following"
+                      value={metrics?.trendScore || 0}
+                      description="Market direction alignment"
+                    />
+                    <MetricBar
+                      label="Volatility Management"
+                      value={metrics?.volatilityScore || 0}
+                      description="Risk-adjusted returns"
+                    />
+                    <MetricBar
+                      label="Alpha Generation"
+                      value={metrics?.alphaScore || 0}
+                      description="Excess returns vs market"
+                    />
+                  </div>
+                </Card>
+
+                {/* DeFi Engagement */}
+                <Card className="p-4 bg-white/80">
+                  <h3 className="text-lg font-bold text-[var(--ocean-dark)] mb-4">DeFi Engagement 🏦</h3>
+                  <div className="space-y-4">
+                    <MetricBar
+                      label="Protocol Diversity"
+                      value={metrics?.protocolScore || 0}
+                      description="DeFi platform usage"
+                    />
+                    <MetricBar
+                      label="Yield Optimization"
+                      value={metrics?.yieldScore || 0}
+                      description="Farming efficiency"
+                    />
+                    <MetricBar
+                      label="Smart Contract Risk"
+                      value={metrics?.contractScore || 0}
+                      description="Protocol safety rating"
+                    />
+                  </div>
+                </Card>
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
       </div>
     </Card>
   )
