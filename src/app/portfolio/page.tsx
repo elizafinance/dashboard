@@ -16,7 +16,6 @@ import { TradesAndSwaps } from "@/components/portfolio/trades"
 import { LendingDashboard } from "@/components/portfolio/lending"
 import { OpportunityDiscovery } from "@/components/portfolio/discovery"
 import { PortfolioSwaps } from "@/components/portfolio/swaps"
-import { AITrading } from "@/components/portfolio/ai-trading"
 
 export default function PortfolioPage() {
   const { connected } = useWallet()
@@ -74,50 +73,75 @@ export default function PortfolioPage() {
   }
 
   return (
-    <main className="container max-w-[90vw] mx-auto px-6 sm:px-8 lg:px-12 py-8 sm:py-10">
-      <div className="max-w-[95%] mx-auto">
-        <h1 className="text-4xl font-bold text-[var(--ocean-dark)] mb-8">
-          Your Portfolio Dashboard
-        </h1>
+    <div className="container max-w-[1200px] mx-auto p-4 sm:p-6 space-y-6">
+      <Tabs defaultValue="overview" className="w-full">
+        <TabsList className="w-full bg-gradient-to-r from-[var(--sand-light)] to-[var(--sand-dark)] p-1 rounded-lg border-2 border-[var(--ocean-light)]">
+          <TabsTrigger 
+            value="overview"
+            className="flex-1 data-[state=active]:bg-white/90 data-[state=active]:text-[var(--ocean-dark)] data-[state=active]:shadow-sm rounded-md transition-all duration-200"
+          >
+            Overview 📊
+          </TabsTrigger>
+          <TabsTrigger 
+            value="optimization"
+            className="flex-1 data-[state=active]:bg-white/90 data-[state=active]:text-[var(--ocean-dark)] data-[state=active]:shadow-sm rounded-md transition-all duration-200"
+          >
+            Optimization 🎯
+          </TabsTrigger>
+          <TabsTrigger 
+            value="yield"
+            className="flex-1 data-[state=active]:bg-white/90 data-[state=active]:text-[var(--ocean-dark)] data-[state=active]:shadow-sm rounded-md transition-all duration-200"
+          >
+            Yield 💰
+          </TabsTrigger>
+          <TabsTrigger 
+            value="trades"
+            className="flex-1 data-[state=active]:bg-white/90 data-[state=active]:text-[var(--ocean-dark)] data-[state=active]:shadow-sm rounded-md transition-all duration-200"
+          >
+            Trades 📈
+          </TabsTrigger>
+          <TabsTrigger 
+            value="lending"
+            className="flex-1 data-[state=active]:bg-white/90 data-[state=active]:text-[var(--ocean-dark)] data-[state=active]:shadow-sm rounded-md transition-all duration-200"
+          >
+            Lending 🏦
+          </TabsTrigger>
+          <TabsTrigger 
+            value="discovery"
+            className="flex-1 data-[state=active]:bg-white/90 data-[state=active]:text-[var(--ocean-dark)] data-[state=active]:shadow-sm rounded-md transition-all duration-200"
+          >
+            Discovery 🔍
+          </TabsTrigger>
+          <TabsTrigger 
+            value="swaps"
+            className="flex-1 data-[state=active]:bg-white/90 data-[state=active]:text-[var(--ocean-dark)] data-[state=active]:shadow-sm rounded-md transition-all duration-200"
+          >
+            Swaps 🔄
+          </TabsTrigger>
+        </TabsList>
 
-        <Tabs defaultValue="overview" className="space-y-4">
-          <TabsList className="overflow-x-auto flex w-full justify-start sm:justify-center p-1 gap-1">
-            <TabsTrigger value="overview" className="text-sm sm:text-base whitespace-nowrap">Overview</TabsTrigger>
-            <TabsTrigger value="swaps" className="text-sm sm:text-base whitespace-nowrap">Swaps</TabsTrigger>
-            <TabsTrigger value="optimization" className="text-sm sm:text-base whitespace-nowrap">Optimization</TabsTrigger>
-            <TabsTrigger value="yield" className="text-sm sm:text-base whitespace-nowrap">Yield Farming</TabsTrigger>
-            <TabsTrigger value="trades" className="text-sm sm:text-base whitespace-nowrap">Trades & Swaps</TabsTrigger>
-            <TabsTrigger value="lending" className="text-sm sm:text-base whitespace-nowrap">Lending</TabsTrigger>
-            <TabsTrigger value="discovery" className="text-sm sm:text-base whitespace-nowrap">Discovery</TabsTrigger>
-            <TabsTrigger value="ai-trading" className="text-sm sm:text-base whitespace-nowrap">AI Trading</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="overview">
-            <PortfolioOverview />
-          </TabsContent>
-          <TabsContent value="swaps">
-            <PortfolioSwaps />
-          </TabsContent>
-          <TabsContent value="optimization">
-            <PortfolioOptimization />
-          </TabsContent>
-          <TabsContent value="yield">
-            <YieldAggregation />
-          </TabsContent>
-          <TabsContent value="trades">
-            <TradesAndSwaps />
-          </TabsContent>
-          <TabsContent value="lending">
-            <LendingDashboard />
-          </TabsContent>
-          <TabsContent value="discovery">
-            <OpportunityDiscovery />
-          </TabsContent>
-          <TabsContent value="ai-trading">
-            <AITrading />
-          </TabsContent>
-        </Tabs>
-      </div>
-    </main>
+        <TabsContent value="overview">
+          <PortfolioOverview />
+        </TabsContent>
+        <TabsContent value="optimization">
+          <PortfolioOptimization />
+        </TabsContent>
+        <TabsContent value="yield">
+          <YieldAggregation />
+        </TabsContent>
+        <TabsContent value="trades">
+          <TradesAndSwaps />
+        </TabsContent>
+        <TabsContent value="lending">
+          <LendingDashboard />
+        </TabsContent>
+        <TabsContent value="discovery">
+          <OpportunityDiscovery />
+        </TabsContent>
+        <TabsContent value="swaps">
+          <PortfolioSwaps />
+        </TabsContent>
+      </Tabs>
+    </div>
   )
-} 
+}
