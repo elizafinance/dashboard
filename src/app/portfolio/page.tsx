@@ -16,6 +16,7 @@ import { TradesAndSwaps } from "@/components/portfolio/trades"
 import { LendingDashboard } from "@/components/portfolio/lending"
 import { OpportunityDiscovery } from "@/components/portfolio/discovery"
 import { PortfolioSwaps } from "@/components/portfolio/swaps"
+import { AITrading } from "@/components/portfolio/ai-trading"
 
 export default function PortfolioPage() {
   const { connected } = useWallet()
@@ -88,6 +89,7 @@ export default function PortfolioPage() {
             <TabsTrigger value="trades" className="text-sm sm:text-base whitespace-nowrap">Trades & Swaps</TabsTrigger>
             <TabsTrigger value="lending" className="text-sm sm:text-base whitespace-nowrap">Lending</TabsTrigger>
             <TabsTrigger value="discovery" className="text-sm sm:text-base whitespace-nowrap">Discovery</TabsTrigger>
+            <TabsTrigger value="ai-trading" className="text-sm sm:text-base whitespace-nowrap">AI Trading</TabsTrigger>
           </TabsList>
 
           <TabsContent value="overview">
@@ -110,6 +112,9 @@ export default function PortfolioPage() {
           </TabsContent>
           <TabsContent value="discovery">
             <OpportunityDiscovery />
+          </TabsContent>
+          <TabsContent value="ai-trading">
+            <AITrading />
           </TabsContent>
         </Tabs>
       </div>

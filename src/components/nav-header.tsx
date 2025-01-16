@@ -78,10 +78,15 @@ export function NavHeader() {
             height={32}
             className="rounded-full border-2 border-[var(--coral)]"
           />
-          <span className="text-[var(--ocean-dark)] font-bold text-xl flex items-center gap-1">
-            Eliza.Finance
-            <span className="text-2xl">🏖️</span>
-          </span>
+          <Image
+            src="/typeFont.png"
+            alt="Eliza Finance"
+            width={140}
+            height={32}
+            className="h-8 w-auto"
+            priority
+          />
+          <span className="text-2xl">🏖️</span>
         </Link>
 
         {/* Desktop Navigation */}
