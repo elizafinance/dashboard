@@ -6,6 +6,7 @@ import 'react-circular-progressbar/dist/styles.css'
 import Image from 'next/image'
 import { calculatePortfolioMetrics } from '@/lib/services/portfolio-metrics'
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
+import { Spinner } from "@/components/ui/spinner"
 
 interface PortfolioMetrics {
   defaiScore: number
