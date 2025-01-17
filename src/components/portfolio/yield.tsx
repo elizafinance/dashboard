@@ -27,7 +27,7 @@ export function YieldAggregation() {
     // Transform pool data to include additional yield-specific fields
     const yieldOpps = poolsData.pools.map(pool => ({
       ...pool,
-      protocol: ['Orca', 'Raydium', 'Jupiter'][Math.floor(Math.random() * 3)], // Temporary random assignment
+      protocol: ['Orca', 'Raydium', 'Jupiter'][Math.floor(Math.random() * 3)],
       risk: ['Low', 'Medium', 'High'][Math.floor(Math.random() * 3)] as 'Low' | 'Medium' | 'High',
       recommended: Math.random() > 0.5
     }))
@@ -36,12 +36,12 @@ export function YieldAggregation() {
   }, [publicKey])
 
   return (
-    <div className="grid gap-4">
+    <div className="w-full max-w-full overflow-hidden">
       <Card className="p-4 sm:p-6 bg-gradient-to-r from-[var(--ocean-light)]/5 to-[var(--coral)]/5">
         <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-          <div>
-            <h3 className="font-medium text-[var(--ocean-dark)]">Prepare for Launch! 🚀</h3>
-            <p className="text-sm text-[var(--ocean-dark)]/60">
+          <div className="min-w-0 flex-1">
+            <h3 className="font-medium text-[var(--ocean-dark)] truncate">Prepare for Launch! 🚀</h3>
+            <p className="text-sm text-[var(--ocean-dark)]/60 truncate">
               Lock your LP tokens on Raydium to be ready for our yield farming pools
             </p>
           </div>
@@ -49,7 +49,7 @@ export function YieldAggregation() {
             href="https://raydium.io/liquidity-pools/?token=5LGyBHMMPwzMunxhcBMn6ZWAuqoHUQmcFiboTJidFURP"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full sm:w-auto"
+            className="w-full sm:w-auto flex-shrink-0"
           >
             <Button 
               className="w-full sm:w-auto bg-[var(--ocean-dark)] hover:bg-[var(--ocean-light)] text-white"
@@ -59,14 +59,15 @@ export function YieldAggregation() {
           </a>
         </div>
       </Card>
-      <Card className="p-6">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-[var(--ocean-dark)]">
+
+      <Card className="p-6 mt-4">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+          <h2 className="text-2xl font-bold text-[var(--ocean-dark)] truncate">
             Ripper Yield Opportunities 🏄‍♂️
           </h2>
           <Button 
             variant="outline"
-            className="border-[var(--ocean-dark)] text-[var(--ocean-dark)]"
+            className="w-full sm:w-auto border-[var(--ocean-dark)] text-[var(--ocean-dark)] flex-shrink-0"
           >
             Auto-Compound Settings
           </Button>
@@ -84,10 +85,10 @@ export function YieldAggregation() {
                 key={opp.id}
                 className="bg-white/80 p-4 rounded-lg border border-[var(--ocean-light)]/20"
               >
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 items-center">
-                  <div>
-                    <h3 className="font-semibold text-[var(--ocean-dark)]">{opp.name}</h3>
-                    <p className="text-sm text-[var(--ocean-dark)]/60">{opp.protocol}</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 items-center">
+                  <div className="min-w-0">
+                    <h3 className="font-semibold text-[var(--ocean-dark)] truncate">{opp.name}</h3>
+                    <p className="text-sm text-[var(--ocean-dark)]/60 truncate">{opp.protocol}</p>
                   </div>
                   <div className="text-center">
                     <p className="text-2xl font-bold text-[var(--coral)]">
@@ -105,7 +106,7 @@ export function YieldAggregation() {
                     <Button 
                       variant="outline"
                       size="sm"
-                      className="border-[var(--ocean-dark)] text-[var(--ocean-dark)]"
+                      className="w-full sm:w-auto border-[var(--ocean-dark)] text-[var(--ocean-dark)]"
                       disabled={opp.tvl === 0}
                     >
                       Farm Now 🌾
@@ -113,7 +114,7 @@ export function YieldAggregation() {
                   </div>
                 </div>
                 {opp.recommended && (
-                  <div className="mt-2 text-xs text-[var(--coral)] font-medium">
+                  <div className="mt-2 text-xs text-[var(--coral)] font-medium truncate">
                     🤖 Eliza Recommends: Bonza opportunity for yield farming!
                   </div>
                 )}

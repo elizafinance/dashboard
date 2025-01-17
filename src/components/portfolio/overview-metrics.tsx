@@ -7,6 +7,7 @@ import Image from 'next/image'
 import { calculatePortfolioMetrics } from '@/lib/services/portfolio-metrics'
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '../ui/accordion'
 import { Spinner } from '../ui/spinner'
+import { shareOnX } from '@/lib/social-share'
 
 interface PortfolioMetrics {
   risk: number
@@ -133,7 +134,15 @@ export function OverviewMetrics() {
               })}
             />
           </div>
-          <p className="mt-4 text-center font-medium text-[var(--ocean-dark)]">DEFAI SCORE</p>
+          <div className="mt-4 flex items-center gap-2">
+            <p className="text-center font-medium text-[var(--ocean-dark)]">DEFAI SCORE</p>
+            <button
+              onClick={() => shareOnX(metrics)}
+              className="inline-flex items-center justify-center rounded-md bg-[var(--ocean-dark)] px-3 py-1 text-sm font-semibold text-white shadow-sm hover:bg-[var(--ocean-dark)]/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--ocean-dark)]"
+            >
+              Share on 𝕏
+            </button>
+          </div>
         </div>
 
         {/* Right Column - Performance Metrics */}

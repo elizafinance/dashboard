@@ -81,20 +81,20 @@ export function OpportunityDiscovery() {
   }
 
   return (
-    <div className="grid gap-4">
-      <Card className="p-6">
-        <div className="flex justify-between items-center mb-6">
-          <div>
-            <h2 className="text-2xl font-bold text-[var(--ocean-dark)]">
+    <div className="w-full max-w-full overflow-hidden">
+      <Card className="p-4 sm:p-6">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+          <div className="min-w-0 flex-1">
+            <h2 className="text-2xl font-bold text-[var(--ocean-dark)] truncate">
               New Opportunities 🎯
             </h2>
-            <p className="text-sm text-[var(--ocean-dark)]/60">
+            <p className="text-sm text-[var(--ocean-dark)]/60 truncate">
               Eliza's found some fresh opportunities in the ecosystem
             </p>
           </div>
           <Button 
             variant="outline"
-            className="border-[var(--ocean-dark)] text-[var(--ocean-dark)]"
+            className="w-full sm:w-auto border-[var(--ocean-dark)] text-[var(--ocean-dark)] flex-shrink-0"
             onClick={() => setShowSettings(true)}
           >
             Discovery Settings 🔍
@@ -113,12 +113,12 @@ export function OpportunityDiscovery() {
                 key={index}
                 className="bg-white/80 p-4 rounded-lg border border-[var(--ocean-light)]/20"
               >
-                <div className="flex justify-between items-start mb-3">
-                  <div>
-                    <h3 className="font-semibold text-[var(--ocean-dark)]">
+                <div className="flex flex-col sm:flex-row justify-between items-start gap-3 mb-3">
+                  <div className="min-w-0 flex-1">
+                    <h3 className="font-semibold text-[var(--ocean-dark)] truncate">
                       {opp.name} ({opp.symbol})
                     </h3>
-                    <div className="flex gap-2 mt-1">
+                    <div className="flex flex-wrap gap-2 mt-1">
                       {opp.tags.map((tag, i) => (
                         <span 
                           key={i}
@@ -133,13 +133,13 @@ export function OpportunityDiscovery() {
                     href={`https://www.solsniffer.com/scanner/${opp.address}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`${getScoreColor(opp.score)} font-medium text-lg`}
+                    className={`${getScoreColor(opp.score)} font-medium text-lg flex-shrink-0`}
                   >
                     {opp.score}
                   </a>
                 </div>
 
-                <div className="grid grid-cols-3 gap-4 mb-3">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-3">
                   <div>
                     <p className="text-sm text-[var(--ocean-dark)]/60">24h Change</p>
                     <p className={`font-bold ${
@@ -158,37 +158,18 @@ export function OpportunityDiscovery() {
                   </div>
                 </div>
 
-                <div className="flex gap-2">
-                  {opp.socials.twitter && (
-                    <a 
-                      href={`https://twitter.com/${opp.socials.twitter}`}
+                <div className="flex flex-wrap gap-2">
+                  {Object.entries(opp.socials).map(([platform, link], i) => (
+                    <a
+                      key={i}
+                      href={platform === 'twitter' ? `https://twitter.com/${link}` : link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-400 hover:underline"
+                      className="text-[var(--ocean-dark)]/60 hover:text-[var(--ocean-dark)] transition-colors"
                     >
-                      Twitter
+                      {platform.charAt(0).toUpperCase() + platform.slice(1)}
                     </a>
-                  )}
-                  {opp.socials.telegram && (
-                    <a 
-                      href={`https://t.me/${opp.socials.telegram}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-400 hover:underline"
-                    >
-                      Telegram
-                    </a>
-                  )}
-                  {opp.socials.discord && (
-                    <a 
-                      href={opp.socials.discord}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-400 hover:underline"
-                    >
-                      Discord
-                    </a>
-                  )}
+                  ))}
                 </div>
               </div>
             ))}

@@ -7,6 +7,7 @@ import { useWallet } from '@solana/wallet-adapter-react'
 import { Card } from "@/components/ui/card"
 import { InviteCodeModal } from '@/components/invite-code-modal'
 import { validateInviteCode, setInviteCode, hasValidInviteCode } from '@/lib/services/invite-code'
+import { cn } from "@/lib/utils"
 
 // Import portfolio components
 import { PortfolioOverview } from "@/components/portfolio/overview"
@@ -52,75 +53,80 @@ export default function PortfolioPage() {
   }
 
   return (
-    <Tabs defaultValue="overview" className="container max-w-[1200px] mx-auto p-4 sm:p-6 space-y-6">
-      <div className="overflow-x-auto scrollbar-hide sm:overflow-visible">
-        <TabsList className="w-max sm:w-full flex sm:grid sm:grid-cols-7 bg-[var(--ocean-light)]/10 rounded-xl p-2 gap-2">
-          <TabsTrigger 
-            value="overview"
-            className="flex-shrink-0 min-w-[120px] scroll-ml-2 scroll-snap-align-start data-[state=active]:bg-white/90 data-[state=active]:text-[var(--ocean-dark)] data-[state=active]:shadow-sm px-4 rounded-md transition-all duration-200"
-          >
-            Overview 📊
-          </TabsTrigger>
-          <TabsTrigger 
-            value="optimization"
-            className="flex-shrink-0 min-w-[120px] scroll-ml-2 scroll-snap-align-start data-[state=active]:bg-white/90 data-[state=active]:text-[var(--ocean-dark)] data-[state=active]:shadow-sm px-4 rounded-md transition-all duration-200"
-          >
-            Optimization 🎯
-          </TabsTrigger>
-          <TabsTrigger 
-            value="yield"
-            className="flex-shrink-0 min-w-[120px] scroll-ml-2 scroll-snap-align-start data-[state=active]:bg-white/90 data-[state=active]:text-[var(--ocean-dark)] data-[state=active]:shadow-sm px-4 rounded-md transition-all duration-200"
-          >
-            Yield 💰
-          </TabsTrigger>
-          <TabsTrigger 
-            value="trades"
-            className="flex-shrink-0 min-w-[120px] scroll-ml-2 scroll-snap-align-start data-[state=active]:bg-white/90 data-[state=active]:text-[var(--ocean-dark)] data-[state=active]:shadow-sm px-4 rounded-md transition-all duration-200"
-          >
-            Trades 📈
-          </TabsTrigger>
-          <TabsTrigger 
-            value="lending"
-            className="flex-shrink-0 min-w-[120px] scroll-ml-2 scroll-snap-align-start data-[state=active]:bg-white/90 data-[state=active]:text-[var(--ocean-dark)] data-[state=active]:shadow-sm px-4 rounded-md transition-all duration-200"
-          >
-            Lending 🏦
-          </TabsTrigger>
-          <TabsTrigger 
-            value="discovery"
-            className="flex-shrink-0 min-w-[120px] scroll-ml-2 scroll-snap-align-start data-[state=active]:bg-white/90 data-[state=active]:text-[var(--ocean-dark)] data-[state=active]:shadow-sm px-4 rounded-md transition-all duration-200"
-          >
-            Discovery 🔍
-          </TabsTrigger>
-          <TabsTrigger 
-            value="swaps"
-            className="flex-shrink-0 min-w-[120px] scroll-ml-2 scroll-snap-align-start data-[state=active]:bg-white/90 data-[state=active]:text-[var(--ocean-dark)] data-[state=active]:shadow-sm px-4 rounded-md transition-all duration-200"
-          >
-            Swaps 🔄
-          </TabsTrigger>
-        </TabsList>
-      </div>
+    <div className="container mx-auto px-4">
+      <Tabs defaultValue="overview" className="w-full">
+        <div className="relative">
+          <div className="absolute inset-0 bg-gradient-to-r from-[var(--ocean-light)]/20 via-[var(--coral)]/10 to-[var(--ocean-light)]/20 blur-xl h-[50%] -z-10" />
+          <TabsList className="relative w-full h-auto flex-wrap sm:flex-nowrap overflow-x-auto scrollbar-hide bg-white/50 backdrop-blur-sm border border-[var(--ocean-light)]/20 p-1.5 rounded-xl">
+            <div className="flex flex-wrap sm:flex-nowrap w-full sm:w-auto gap-1.5">
+              <TabsTrigger 
+                value="overview"
+                className="flex-1 sm:flex-none min-w-[120px] px-4 py-2.5 rounded-lg data-[state=active]:bg-white data-[state=active]:text-[var(--ocean-dark)] data-[state=active]:shadow-sm text-[var(--ocean-dark)]/70 transition-all duration-200"
+              >
+                Overview 📊
+              </TabsTrigger>
+              <TabsTrigger 
+                value="optimization"
+                className="flex-1 sm:flex-none min-w-[120px] px-4 py-2.5 rounded-lg data-[state=active]:bg-white data-[state=active]:text-[var(--ocean-dark)] data-[state=active]:shadow-sm text-[var(--ocean-dark)]/70 transition-all duration-200"
+              >
+                Optimization 🎯
+              </TabsTrigger>
+              <TabsTrigger 
+                value="yield"
+                className="flex-1 sm:flex-none min-w-[120px] px-4 py-2.5 rounded-lg data-[state=active]:bg-white data-[state=active]:text-[var(--ocean-dark)] data-[state=active]:shadow-sm text-[var(--ocean-dark)]/70 transition-all duration-200"
+              >
+                Yield 🌾
+              </TabsTrigger>
+              <TabsTrigger 
+                value="trades"
+                className="flex-1 sm:flex-none min-w-[120px] px-4 py-2.5 rounded-lg data-[state=active]:bg-white data-[state=active]:text-[var(--ocean-dark)] data-[state=active]:shadow-sm text-[var(--ocean-dark)]/70 transition-all duration-200"
+              >
+                Trades 📈
+              </TabsTrigger>
+              <TabsTrigger 
+                value="lending"
+                className="flex-1 sm:flex-none min-w-[120px] px-4 py-2.5 rounded-lg data-[state=active]:bg-white data-[state=active]:text-[var(--ocean-dark)] data-[state=active]:shadow-sm text-[var(--ocean-dark)]/70 transition-all duration-200"
+              >
+                Lending 🏦
+              </TabsTrigger>
+              <TabsTrigger 
+                value="discovery"
+                className="flex-1 sm:flex-none min-w-[120px] px-4 py-2.5 rounded-lg data-[state=active]:bg-white data-[state=active]:text-[var(--ocean-dark)] data-[state=active]:shadow-sm text-[var(--ocean-dark)]/70 transition-all duration-200"
+              >
+                Discovery 🔍
+              </TabsTrigger>
+              <TabsTrigger 
+                value="swaps"
+                className="flex-1 sm:flex-none min-w-[120px] px-4 py-2.5 rounded-lg data-[state=active]:bg-white data-[state=active]:text-[var(--ocean-dark)] data-[state=active]:shadow-sm text-[var(--ocean-dark)]/70 transition-all duration-200"
+              >
+                Swaps 🔄
+              </TabsTrigger>
+            </div>
+          </TabsList>
+        </div>
 
-      <TabsContent value="overview">
-        <PortfolioOverview />
-      </TabsContent>
-      <TabsContent value="optimization">
-        <PortfolioOptimization />
-      </TabsContent>
-      <TabsContent value="yield">
-        <YieldAggregation />
-      </TabsContent>
-      <TabsContent value="trades">
-        <TradesAndSwaps />
-      </TabsContent>
-      <TabsContent value="lending">
-        <LendingDashboard />
-      </TabsContent>
-      <TabsContent value="discovery">
-        <OpportunityDiscovery />
-      </TabsContent>
-      <TabsContent value="swaps">
-        <PortfolioSwaps />
-      </TabsContent>
-    </Tabs>
+        <TabsContent value="overview">
+          <PortfolioOverview />
+        </TabsContent>
+        <TabsContent value="optimization">
+          <PortfolioOptimization />
+        </TabsContent>
+        <TabsContent value="yield">
+          <YieldAggregation />
+        </TabsContent>
+        <TabsContent value="trades">
+          <TradesAndSwaps />
+        </TabsContent>
+        <TabsContent value="lending">
+          <LendingDashboard />
+        </TabsContent>
+        <TabsContent value="discovery">
+          <OpportunityDiscovery />
+        </TabsContent>
+        <TabsContent value="swaps">
+          <PortfolioSwaps />
+        </TabsContent>
+      </Tabs>
+    </div>
   )
 }

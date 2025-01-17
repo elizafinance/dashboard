@@ -40,8 +40,8 @@ export function PortfolioOptimization() {
   }, [publicKey])
 
   return (
-    <div className="grid gap-4">
-      <Card className="p-6">
+    <div className="w-full max-w-full overflow-hidden">
+      <Card className="p-4 sm:p-6">
         <h2 className="text-2xl font-bold text-[var(--ocean-dark)] mb-4">
           Eliza's Portfolio Analysis 🤖
         </h2>
@@ -54,32 +54,24 @@ export function PortfolioOptimization() {
         ) : (
           <div className="space-y-4">
             {suggestions.map((suggestion, index) => (
-              <div 
-                key={index}
-                className="bg-white/80 p-4 rounded-lg border border-[var(--ocean-light)]/20"
-              >
-                <div className="flex justify-between items-start mb-2">
-                  <h3 className="text-lg font-semibold text-[var(--ocean-dark)]">
-                    {suggestion.title}
-                  </h3>
-                  <span className="text-xs px-2 py-1 rounded-full bg-[var(--ocean-light)]/10">
-                    {suggestion.type}
-                  </span>
-                </div>
-                <p className="text-[var(--ocean-dark)]/70 mb-2">
-                  {suggestion.description}
-                </p>
-                <div className="flex justify-between items-center text-sm">
-                  <span className="text-[var(--ocean-dark)]/60">
-                    {suggestion.impact}
-                  </span>
-                  <Button 
-                    variant="outline"
-                    size="sm"
-                    className="border-[var(--coral)] text-[var(--coral)] hover:bg-[var(--coral)]/10"
-                  >
-                    {suggestion.action}
-                  </Button>
+              <div key={index} className="bg-white rounded-lg p-4 shadow-sm">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                  <div className="space-y-2 flex-1 min-w-0">
+                    <h3 className="text-lg font-semibold text-[var(--ocean-dark)]">
+                      {suggestion.title}
+                    </h3>
+                    <p className="text-[var(--ocean-dark)]/70">
+                      {suggestion.description}
+                    </p>
+                    <p className="text-sm font-medium text-[var(--ocean-dark)]/60">
+                      {suggestion.impact}
+                    </p>
+                  </div>
+                  <div className="flex-shrink-0">
+                    <button className="w-full sm:w-auto px-4 py-2 bg-[var(--coral)] text-white rounded-md hover:bg-[var(--coral)]/90 transition-colors">
+                      {suggestion.action}
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}
