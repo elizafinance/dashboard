@@ -1,7 +1,27 @@
 import { Connection, PublicKey } from '@solana/web3.js'
 import { TokenListProvider } from '@solana/spl-token-registry'
+interface TokenHolding {
+  [x: string]: any
+  token: any
+  balance: any
+  marketData: any
+  percentage: number
+  change24h: number
+  mint: string
+  amount: number
+  value: number
+}
 
-interface TokenData {
+export interface TokenData {
+  holdings: TokenHolding[]
+  summary: {
+    totalValue: number
+    totalHoldings: number
+    significantPositions: number
+    averagePosition: number
+    topHoldingsValue: number
+    topHoldingsPercentage: number
+  }
   dailyPerformance: number
   performanceVsCMC: number
   significantHoldings: Array<{
@@ -15,6 +35,40 @@ interface TokenData {
 export async function fetchTokenData(walletAddress: string): Promise<TokenData> {
   // For now, return mock data until we integrate with real data sources
   return {
+    holdings: [
+      {
+          mint: 'DEFAI', amount: 1000, value: 1000,
+          token: undefined,
+          balance: undefined,
+          marketData: undefined,
+          percentage: 0,
+          change24h: 0
+      },
+      {
+          mint: 'AI16Z', amount: 2000, value: 2000,
+          token: undefined,
+          balance: undefined,
+          marketData: undefined,
+          percentage: 0,
+          change24h: 0
+      },
+      {
+          mint: 'SOL', amount: 1000, value: 1000,
+          token: undefined,
+          balance: undefined,
+          marketData: undefined,
+          percentage: 0,
+          change24h: 0
+      }
+    ],
+    summary: {
+      totalValue: 4000,
+      totalHoldings: 3,
+      significantPositions: 2,
+      averagePosition: 1333,
+      topHoldingsValue: 3000,
+      topHoldingsPercentage: 75
+    },
     dailyPerformance: 2.5,
     performanceVsCMC: 1.2,
     significantHoldings: [

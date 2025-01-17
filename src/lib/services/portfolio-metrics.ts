@@ -1,6 +1,6 @@
 import { Connection, PublicKey } from '@solana/web3.js'
 import { fetchTokenData } from '@/scripts/fetchTokenData'
-import { TokenData, TokenHolding } from '@/types'
+import type { TokenData as AppTokenData, TokenHolding } from '@/types'
 
 interface PortfolioMetrics {
   defaiScore: number
@@ -30,12 +30,13 @@ interface PortfolioMetrics {
   comparisonPercentile: number
 }
 
-const HELIUS_RPC = process.env.NEXT_PUBLIC_HELIUS_RPC
-if (!HELIUS_RPC) {
-  throw new Error('HELIUS_RPC environment variable is not set')
-}
-
 async function getWorkingEndpoint(): Promise<Connection | undefined> {
+  const HELIUS_RPC = process.env.NEXT_PUBLIC_HELIUS_RPC
+  if (!HELIUS_RPC) {
+    console.warn('HELIUS_RPC environment variable is not set')
+    return undefined
+  }
+
   try {
     const connection = new Connection(HELIUS_RPC, 'confirmed')
     await connection.getLatestBlockhash()
@@ -49,32 +50,46 @@ async function getWorkingEndpoint(): Promise<Connection | undefined> {
 
 export async function calculatePortfolioMetrics(publicKey: string): Promise<PortfolioMetrics> {
   try {
-    const tokenData = await fetchTokenData(publicKey)
-    let connection: Connection | undefined
+    const rawTokenData = await fetchTokenData(publicKey)
     
-    try {
-      connection = await getWorkingEndpoint()
-    } catch (error) {
-      console.warn('Failed to establish RPC connection, using mock data only')
+    // Ensure rawTokenData has the expected structure
+    if (!rawTokenData || !('holdings' in rawTokenData) || !Array.isArray(rawTokenData.holdings)) {
+      throw new Error('Invalid token data structure')
     }
+
+    const tokenData: AppTokenData = {
+      holdings: rawTokenData.holdings.map(h => ({
+        address: h.mint,
+        balance: h.amount,
+        decimals: 9, // Assuming default decimals for Solana tokens
+        usdValue: h.value,
+        percentageOwned: h.percentage,
+        firstReceived: 0, // Placeholder, adjust as needed
+        marketData: {
+          baseToken: {
+            address: h.mint,
+            name: h.token || h.mint,
+            symbol: h.token || h.mint
+          },
+          priceUsd: (h.value / h.amount).toString(),
+          priceChange: {
+            m5: 0,
+            h1: 0,
+            h6: 0,
+            h24: h.change24h || 0
+          },
+          pairCreatedAt: Date.now(),
+          score: 0 // Placeholder, adjust as needed
+        }
+      })),
+      summary: rawTokenData.summary,
+      dailyPerformance: rawTokenData.dailyPerformance,
+      performanceVsCMC: rawTokenData.performanceVsCMC,
+      significantHoldings: rawTokenData.significantHoldings
+    }
+
     return {
-      defaiScore: calculateDefaiScore({
-        holdings: tokenData.holdings.map(h => ({
-          token: h.token,
-          percentage: h.percentage,
-          balance: h.balance,
-          marketData: h.marketData,
-          address: h.token.address,
-          decimals: h.token.decimals,
-          usdValue: h.usdValue,
-          percentageOwned: h.percentageOwned,
-          firstReceived: h.firstReceived
-        })),
-        summary: tokenData.summary,
-        significantHoldings: tokenData.significantHoldings,
-        dailyPerformance: tokenData.dailyPerformance,
-        performanceVsCMC: tokenData.performanceVsCMC
-      }),
+      defaiScore: calculateDefaiScore(tokenData),
       risk: 75,
       entryScore: 70,
       exitScore: 75,
@@ -88,63 +103,15 @@ export async function calculatePortfolioMetrics(publicKey: string): Promise<Port
       liquidity: 85,
       diversification: 75,
       metrics: {
-        capitalManagement: calculateCapitalMetric({
-          holdings: tokenData.holdings.map(h => ({
-            token: h.token,
-            percentage: h.percentage,
-            balance: h.balance,
-            marketData: h.marketData,
-            address: h.token.address,
-            decimals: h.token.decimals,
-            usdValue: h.usdValue,
-            percentageOwned: h.percentageOwned,
-            firstReceived: h.firstReceived
-          })),
-          summary: tokenData.summary,
-          significantHoldings: tokenData.significantHoldings,
-          dailyPerformance: tokenData.dailyPerformance,
-          performanceVsCMC: tokenData.performanceVsCMC
-        }),
-        degenIndex: calculateDegenIndex({
-          holdings: tokenData.holdings.map(h => ({
-            token: h.token,
-            percentage: h.percentage,
-            balance: h.balance,
-            marketData: h.marketData,
-            address: h.token.address,
-            decimals: h.token.decimals,
-            usdValue: h.usdValue,
-            percentageOwned: h.percentageOwned,
-            firstReceived: h.firstReceived
-          })),
-          summary: tokenData.summary,
-          significantHoldings: tokenData.significantHoldings,
-          dailyPerformance: tokenData.dailyPerformance,
-          performanceVsCMC: tokenData.performanceVsCMC
-        }),
-        defiSavviness: calculateDefiMetric({
-          holdings: tokenData.holdings.map(h => ({
-            token: h.token,
-            percentage: h.percentage,
-            balance: h.balance,
-            marketData: h.marketData,
-            address: h.token.address,
-            decimals: h.token.decimals,
-            usdValue: h.usdValue,
-            percentageOwned: h.percentageOwned,
-            firstReceived: h.firstReceived
-          })),
-          summary: tokenData.summary,
-          significantHoldings: tokenData.significantHoldings,
-          dailyPerformance: tokenData.dailyPerformance,
-          performanceVsCMC: tokenData.performanceVsCMC
-        })
+        capitalManagement: calculateCapitalMetric(tokenData),
+        degenIndex: calculateDegenIndex(tokenData),
+        defiSavviness: calculateDefiMetric(tokenData)
       },
       performance: {
-        daily: tokenData.dailyPerformance,
-        vsCMC100: tokenData.performanceVsCMC
+        daily: rawTokenData.dailyPerformance || 0,
+        vsCMC100: rawTokenData.performanceVsCMC || 0
       },
-      topHoldings: tokenData.significantHoldings.map(h => h.token),
+      topHoldings: rawTokenData.significantHoldings?.map(h => h.token) || [],
       aiAnalysis: "G'day! Your portfolio is looking ripper with a healthy balance. Consider increasing your DeFi exposure to optimize returns.",
       comparisonPercentile: 75
     }
@@ -154,23 +121,30 @@ export async function calculatePortfolioMetrics(publicKey: string): Promise<Port
   }
 }
 
-function calculateDefaiScore(tokenData: TokenData): number {
-  return Math.min(Math.round(
-    tokenData.significantHoldings.reduce((score: number, holding: { token: string }) => {
-      if (holding.token === 'DEFAI') return score + 25
-      return score + 10
-    }, 40)
-  ), 100)
+function calculateDefaiScore(tokenData: AppTokenData): number {
+  if (!tokenData.significantHoldings || !Array.isArray(tokenData.significantHoldings)) {
+    throw new Error('Invalid significantHoldings data structure');
+  }
+
+  return Math.min(
+    Math.round(
+      tokenData.significantHoldings.reduce((score: number, holding: { token: string }) => {
+        if (holding.token === 'DEFAI') return score + 25;
+        return score + 10;
+      }, 40)
+    ),
+    100
+  );
 }
 
-function calculateCapitalMetric(tokenData: TokenData): number {
+function calculateCapitalMetric(tokenData: AppTokenData): number {
   return Math.min(Math.round(
     tokenData.summary.totalHoldings * 10 + 
     tokenData.summary.significantPositions * 15
   ), 100)
 }
 
-function calculateDegenIndex(tokenData: TokenData): number {
+function calculateDegenIndex(tokenData: AppTokenData): number {
   return Math.max(0, Math.min(100, 
     100 - tokenData.significantHoldings
       .filter((h: { percentage: number }) => h.percentage > 30)
@@ -178,7 +152,7 @@ function calculateDegenIndex(tokenData: TokenData): number {
   ))
 }
 
-function calculateDefiMetric(tokenData: TokenData): number {
+function calculateDefiMetric(tokenData: AppTokenData): number {
   return Math.min(Math.round(
     tokenData.significantHoldings
       .filter((h: { token: string }) => ['DEFAI', 'AI16Z'].includes(h.token))

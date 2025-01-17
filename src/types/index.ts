@@ -108,6 +108,7 @@ interface TokenHolding {
 }
 
 interface TokenData {
+    [x: string]: any;
     holdings: TokenHolding[];
     summary: {
         totalValue: number;
@@ -116,7 +117,14 @@ interface TokenData {
         averagePosition: number;
         topHoldingsValue: number;
         topHoldingsPercentage: number;
-    }
+    };
+    dailyPerformance: number;
+    performanceVsCMC: number;
+    significantHoldings: Array<{
+        token: string;
+        value: number;
+        percentage: number;
+    }>;
 }
 
 interface TimeSeriesPoint {
