@@ -4,8 +4,10 @@ import { ExternalLink, Menu, X } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from "@/components/ui/button"
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
+import { usePathname } from 'next/navigation'
+import { cn } from "@/lib/utils"
 
 // Dynamically import the WalletMultiButton with no SSR
 const WalletMultiButton = dynamic(
@@ -19,56 +21,43 @@ export function WalletButton() {
 
 export function NavHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const pathname = usePathname()
 
   const NavLinks = () => (
     <>
-      <Link 
-        href="/"
-        className="text-[var(--ocean-dark)] hover:text-[var(--ocean-light)] transition-colors"
-        onClick={() => setIsMenuOpen(false)}
-      >
-        Home
-      </Link>
-      <Link 
-        href="/pools"
-        className="text-[var(--ocean-dark)] hover:text-[var(--ocean-light)] transition-colors flex items-center gap-1"
-        onClick={() => setIsMenuOpen(false)}
-      >
-        Pools <span className="text-lg">🌊</span>
-      </Link>
-      {/* <Link 
-        href="/swap"
-        className="text-[var(--ocean-dark)] hover:text-[var(--ocean-light)] transition-colors flex items-center gap-1"
-        onClick={() => setIsMenuOpen(false)}
-      >
-        Swap <span className="text-lg">💬</span>
-      </Link> */}
-      {/* <Link 
-        href="/chat"
-        className="text-[var(--ocean-dark)] hover:text-[var(--ocean-light)] transition-colors flex items-center gap-1"
-        onClick={() => setIsMenuOpen(false)}
-      >
-        Chat <span className="text-lg">💬</span>
-      </Link> 
-      <Link 
-        href="/uni"
-        className="text-[var(--ocean-dark)] hover:text-[var(--ocean-light)] transition-colors flex items-center gap-1"
-        onClick={() => setIsMenuOpen(false)}
-      >
-        University <span className="text-lg">💬</span>
-      </Link> */}
-      <Link 
-        href="/portfolio"
-        className="text-[var(--ocean-dark)] hover:text-[var(--ocean-light)] transition-colors flex items-center gap-1"
-        onClick={() => setIsMenuOpen(false)}
-      >
-        Portfolio <span className="text-lg">💬</span>
-      </Link>
+      {[
+        { href: '/portfolio', label: 'Portfolio 🌿' },
+        { href: '/pools', label: 'Pools 🪴' },
+        { href: '/how-it-works', label: 'Docs 📚' },
+      ].map((link) => (
+        <Link
+          key={link.href}
+          href={link.href}
+          className={cn(
+            'text-[#2D5A27] hover:text-[#4A7A3D] transition-colors px-3 py-2 rounded-lg',
+            pathname === link.href && 'bg-[#2D5A27]/10 font-medium'
+          )}
+        >
+          {link.label}
+        </Link>
+      ))}
     </>
   )
 
+  // Mobile menu
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [isMenuOpen])
+
   return (
-    <header className="w-full border-b border-[var(--ocean-light)] bg-gradient-to-r from-[var(--sand-dark)] to-[var(--sand-light)]">
+    <header className="w-full border-b border-[#2D5A27]/20 bg-gradient-to-r from-[#4A7A3D]/10 to-[#2D5A27]/5">
       <div className="container max-w-[95vw] mx-auto px-4 py-3 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
           <Image
@@ -76,7 +65,7 @@ export function NavHeader() {
             alt="Eliza Finance Logo"
             width={32}
             height={32}
-            className="rounded-full border-2 border-[var(--coral)]"
+            className="rounded-full border-2 border-[#2D5A27]"
           />
           <Image
             src="/typeFont.png"
@@ -86,7 +75,7 @@ export function NavHeader() {
             className="h-8 w-auto"
             priority
           />
-          <span className="text-2xl">🏖️</span>
+          <span className="text-2xl">🌿</span>
         </Link>
 
         {/* Desktop Navigation */}
@@ -100,31 +89,35 @@ export function NavHeader() {
           <Button 
             variant="outline" 
             size="icon" 
-            className="border-[var(--ocean-light)]"
+            className="border-[#2D5A27]"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? (
-              <X className="h-5 w-5 text-[var(--ocean-dark)]" />
+              <X className="h-5 w-5 text-[#2D5A27]" />
             ) : (
-              <Menu className="h-5 w-5 text-[var(--ocean-dark)]" />
+              <Menu className="h-5 w-5 text-[#2D5A27]" />
             )}
           </Button>
         </div>
-
-        {/* Mobile Menu Dropdown */}
-        {isMenuOpen && (
-          <div className="absolute top-full left-0 right-0 bg-white/95 backdrop-blur-sm border-b border-[var(--ocean-light)] shadow-lg md:hidden z-50">
-            <nav className="container max-w-[90vw] mx-auto py-4 px-6 flex flex-col gap-4">
-              <div className="flex flex-col gap-3 text-[var(--ocean-dark)]">
-                <NavLinks />
-              </div>
-              <div className="pt-2 border-t border-[var(--ocean-light)]/20">
-                <WalletButton />
-              </div>
-            </nav>
-          </div>
-        )}
       </div>
+
+      {/* Mobile Menu Overlay */}
+      {isMenuOpen && (
+        <div className="fixed inset-0 z-50 bg-white/95 md:hidden">
+          <div className="container h-full flex flex-col items-center justify-center gap-8">
+            <NavLinks />
+            <WalletButton />
+            <Button
+              variant="outline"
+              size="icon"
+              className="absolute top-4 right-4 border-[#2D5A27]"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <X className="h-5 w-5 text-[#2D5A27]" />
+            </Button>
+          </div>
+        </div>
+      )}
     </header>
   )
 } 

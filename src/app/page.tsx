@@ -23,40 +23,51 @@ export default function LandingPage() {
   }
 
   return (
-    <main className="min-h-screen overflow-x-hidden bg-gradient-to-b from-[var(--ocean-light)]/20 to-[var(--sand-light)]/30">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-8 sm:pt-16 pb-16 sm:pb-24">
+    <main className="min-h-screen relative">
+      {/* Bush Background Effect */}
+      <div className="absolute inset-0 bg-[#2D5A27]/10 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#4A7A3D]/30 via-[#2D5A27]/20 to-[#8B5E3C]/10 pointer-events-none" />
+
+      <div className="container mx-auto px-4 sm:px-6 pt-8 sm:pt-16 pb-16 sm:pb-24">
         <div className="flex flex-col lg:flex-row items-center gap-8 sm:gap-12">
           {/* Left Content */}
           <div className="w-full lg:w-1/2 text-center lg:text-left">
-            <h1 className="text-3xl sm:text-5xl font-bold text-[var(--ocean-dark)] mb-6 break-words">
-              DeFAI Summer <span className="text-[var(--coral)]">2025</span> 
+            <h1 className="text-4xl sm:text-5xl font-bold text-[#2D5A27] mb-6 break-words">
+              DeFAI Summer <span className="text-[#4A7A3D]">2025</span> 
             </h1>
-            <p className="text-base sm:text-lg text-[var(--ocean-dark)]/70 mb-6 max-w-[90vw] sm:max-w-prose mx-auto lg:mx-0">
+            <p className="text-base sm:text-lg text-[#2D5A27]/70 mb-6 max-w-[90vw] sm:max-w-prose mx-auto lg:mx-0">
               Join the ripper revolution of autonomous AI agents in DeFi. 
-              The future of finance is being built by AI, for AI. Fair dinkum! 🤖
+              The future of finance is being built by AI, for AI. Fair dinkum! 🌿
             </p>
 
             <div className="flex flex-col gap-4 w-full max-w-sm mx-auto lg:mx-0">
-              <Link href="/pools" className="w-full">
-                <Button className="w-full bg-[var(--ocean-dark)] hover:bg-[var(--ocean-light)] text-white py-6 text-lg">
-                  Dive into our Pools 🏄‍♂️
-                </Button>
-              </Link>
+              <div className="flex flex-col lg:flex-row gap-4">
+                <Link href="/portfolio" className="w-full lg:flex-1">
+                  <Button className="w-full bg-[#2D5A27] hover:bg-[#4A7A3D] text-white py-6 text-lg">
+                    Start Your Walkabout 🌿
+                  </Button>
+                </Link>
+                <Link href="/pools" className="w-full lg:flex-1">
+                  <Button className="w-full bg-[#3B82F6] hover:bg-[#2563EB] text-white py-6 text-lg">
+                    Join our Ripper Pools 🏄‍♂️
+                  </Button>
+                </Link>
+              </div>
 
               {/* Partners Section */}
               <div className="mt-2">
-                <h3 className="text-[var(--ocean-dark)]/60 text-sm mb-2">Our Mates 🤝</h3>
+                <h3 className="text-[#2D5A27]/60 text-sm mb-2">Our Mates 🤝</h3>
                 <div className="grid grid-cols-2 gap-2">
                   <Button 
                     variant="outline" 
-                    className="w-full border-[var(--ocean-dark)] text-[var(--ocean-dark)] py-3 text-sm"
+                    className="w-full border-[#2D5A27] text-[#2D5A27] py-3 text-sm hover:bg-[#2D5A27]/10"
                     onClick={() => handleExternalLinkClick('https://elizawakesup.ai', 'Eliza Wakes Up')}
                   >
                     Chat 💬
                   </Button>
                   <Button 
                     variant="outline" 
-                    className="w-full border-[var(--coral)] text-[var(--coral)] hover:bg-[var(--coral)]/10 py-3 text-sm"
+                    className="w-full border-[#2D5A27] text-[#2D5A27] py-3 text-sm hover:bg-[#2D5A27]/10"
                     onClick={() => handleExternalLinkClick('https://mee.fun', 'Mee.Fun')}
                   >
                     Create 🤖
