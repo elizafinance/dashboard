@@ -5,10 +5,22 @@ import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css'
 import Image from 'next/image'
 import { calculatePortfolioMetrics } from '@/lib/services/portfolio-metrics'
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
-import { Spinner } from "@/components/ui/spinner"
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '../ui/accordion'
+import { Spinner } from '../ui/spinner'
 
 interface PortfolioMetrics {
+  risk: number
+  entryScore: number
+  exitScore: number
+  gasScore: number
+  trendScore: number
+  volatilityScore: number
+  alphaScore: number
+  protocolScore: number
+  yieldScore: number
+  contractScore: number
+  liquidity: number
+  diversification: number
   defaiScore: number
   metrics: {
     capitalManagement: number
@@ -41,7 +53,7 @@ export function OverviewMetrics() {
       try {
         setLoading(true)
         setError(null)
-        const data = await calculatePortfolioMetrics(publicKey)
+        const data = await calculatePortfolioMetrics(publicKey.toString())
         setMetrics(data)
       } catch (error) {
         console.error('Failed to fetch metrics:', error)
@@ -164,17 +176,14 @@ export function OverviewMetrics() {
                     <MetricBar
                       label="Diversification Score"
                       value={metrics?.diversification || 0}
-                      description="Based on asset distribution"
-                    />
+                      />
                     <MetricBar
-                      label="Liquidity Rating"
-                      value={metrics?.liquidityScore || 0}
-                      description="Quick exit capability"
+                      label="Liquidity Rating" 
+                      value={metrics?.liquidity || 0}
                     />
                     <MetricBar
                       label="Risk Exposure"
-                      value={metrics?.riskScore || 0}
-                      description="Overall portfolio risk"
+                      value={metrics?.risk || 0}
                     />
                   </div>
                 </Card>
@@ -186,17 +195,14 @@ export function OverviewMetrics() {
                     <MetricBar
                       label="Entry Timing"
                       value={metrics?.entryScore || 0}
-                      description="Buy decision accuracy"
                     />
                     <MetricBar
                       label="Exit Execution"
                       value={metrics?.exitScore || 0}
-                      description="Sell timing effectiveness"
                     />
                     <MetricBar
                       label="Gas Optimization"
                       value={metrics?.gasScore || 0}
-                      description="Transaction cost efficiency"
                     />
                   </div>
                 </Card>
@@ -208,17 +214,14 @@ export function OverviewMetrics() {
                     <MetricBar
                       label="Trend Following"
                       value={metrics?.trendScore || 0}
-                      description="Market direction alignment"
                     />
                     <MetricBar
                       label="Volatility Management"
                       value={metrics?.volatilityScore || 0}
-                      description="Risk-adjusted returns"
                     />
                     <MetricBar
                       label="Alpha Generation"
                       value={metrics?.alphaScore || 0}
-                      description="Excess returns vs market"
                     />
                   </div>
                 </Card>
@@ -230,17 +233,14 @@ export function OverviewMetrics() {
                     <MetricBar
                       label="Protocol Diversity"
                       value={metrics?.protocolScore || 0}
-                      description="DeFi platform usage"
                     />
                     <MetricBar
                       label="Yield Optimization"
                       value={metrics?.yieldScore || 0}
-                      description="Farming efficiency"
                     />
                     <MetricBar
                       label="Smart Contract Risk"
                       value={metrics?.contractScore || 0}
-                      description="Protocol safety rating"
                     />
                   </div>
                 </Card>

@@ -39,6 +39,15 @@ module.exports = {
           foreground: "hsl(var(--card-foreground))",
         },
       },
+      utilities: {
+        '.scrollbar-hide': {
+          '-ms-overflow-style': 'none',
+          'scrollbar-width': 'none',
+          '&::-webkit-scrollbar': {
+            display: 'none'
+          }
+        }
+      }
     },
   },
   plugins: [require("tailwindcss-animate")],

@@ -53,47 +53,47 @@ export default function PortfolioPage() {
 
   return (
     <Tabs defaultValue="overview" className="container max-w-[1200px] mx-auto p-4 sm:p-6 space-y-6">
-      <div className="overflow-x-auto pb-2 -mb-2 sm:overflow-visible sm:pb-0 sm:mb-0">
-        <TabsList className="w-max sm:w-full flex sm:grid sm:grid-cols-7 bg-[var(--ocean-light)]/10 rounded-xl p-2">
+      <div className="overflow-x-auto scrollbar-hide sm:overflow-visible">
+        <TabsList className="w-max sm:w-full flex sm:grid sm:grid-cols-7 bg-[var(--ocean-light)]/10 rounded-xl p-2 gap-2">
           <TabsTrigger 
             value="overview"
-            className="data-[state=active]:bg-white/90 data-[state=active]:text-[var(--ocean-dark)] data-[state=active]:shadow-sm px-4 rounded-md transition-all duration-200"
+            className="flex-shrink-0 min-w-[120px] scroll-ml-2 scroll-snap-align-start data-[state=active]:bg-white/90 data-[state=active]:text-[var(--ocean-dark)] data-[state=active]:shadow-sm px-4 rounded-md transition-all duration-200"
           >
             Overview 📊
           </TabsTrigger>
           <TabsTrigger 
             value="optimization"
-            className="data-[state=active]:bg-white/90 data-[state=active]:text-[var(--ocean-dark)] data-[state=active]:shadow-sm px-4 rounded-md transition-all duration-200"
+            className="flex-shrink-0 min-w-[120px] scroll-ml-2 scroll-snap-align-start data-[state=active]:bg-white/90 data-[state=active]:text-[var(--ocean-dark)] data-[state=active]:shadow-sm px-4 rounded-md transition-all duration-200"
           >
             Optimization 🎯
           </TabsTrigger>
           <TabsTrigger 
             value="yield"
-            className="data-[state=active]:bg-white/90 data-[state=active]:text-[var(--ocean-dark)] data-[state=active]:shadow-sm px-4 rounded-md transition-all duration-200"
+            className="flex-shrink-0 min-w-[120px] scroll-ml-2 scroll-snap-align-start data-[state=active]:bg-white/90 data-[state=active]:text-[var(--ocean-dark)] data-[state=active]:shadow-sm px-4 rounded-md transition-all duration-200"
           >
             Yield 💰
           </TabsTrigger>
           <TabsTrigger 
             value="trades"
-            className="data-[state=active]:bg-white/90 data-[state=active]:text-[var(--ocean-dark)] data-[state=active]:shadow-sm px-4 rounded-md transition-all duration-200"
+            className="flex-shrink-0 min-w-[120px] scroll-ml-2 scroll-snap-align-start data-[state=active]:bg-white/90 data-[state=active]:text-[var(--ocean-dark)] data-[state=active]:shadow-sm px-4 rounded-md transition-all duration-200"
           >
             Trades 📈
           </TabsTrigger>
           <TabsTrigger 
             value="lending"
-            className="data-[state=active]:bg-white/90 data-[state=active]:text-[var(--ocean-dark)] data-[state=active]:shadow-sm px-4 rounded-md transition-all duration-200"
+            className="flex-shrink-0 min-w-[120px] scroll-ml-2 scroll-snap-align-start data-[state=active]:bg-white/90 data-[state=active]:text-[var(--ocean-dark)] data-[state=active]:shadow-sm px-4 rounded-md transition-all duration-200"
           >
             Lending 🏦
           </TabsTrigger>
           <TabsTrigger 
             value="discovery"
-            className="data-[state=active]:bg-white/90 data-[state=active]:text-[var(--ocean-dark)] data-[state=active]:shadow-sm px-4 rounded-md transition-all duration-200"
+            className="flex-shrink-0 min-w-[120px] scroll-ml-2 scroll-snap-align-start data-[state=active]:bg-white/90 data-[state=active]:text-[var(--ocean-dark)] data-[state=active]:shadow-sm px-4 rounded-md transition-all duration-200"
           >
             Discovery 🔍
           </TabsTrigger>
           <TabsTrigger 
             value="swaps"
-            className="data-[state=active]:bg-white/90 data-[state=active]:text-[var(--ocean-dark)] data-[state=active]:shadow-sm px-4 rounded-md transition-all duration-200"
+            className="flex-shrink-0 min-w-[120px] scroll-ml-2 scroll-snap-align-start data-[state=active]:bg-white/90 data-[state=active]:text-[var(--ocean-dark)] data-[state=active]:shadow-sm px-4 rounded-md transition-all duration-200"
           >
             Swaps 🔄
           </TabsTrigger>
