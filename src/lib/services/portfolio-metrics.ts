@@ -30,33 +30,51 @@ interface PortfolioMetrics {
   comparisonPercentile: number
 }
 
-const HELIUS_RPC = process.env.NEXT_PUBLIC_HELIUS_RPC || 'https://rpc-devnet.helius.xyz/?api-key=YOUR_API_KEY'
+const HELIUS_RPC = process.env.NEXT_PUBLIC_HELIUS_RPC
+if (!HELIUS_RPC) {
+  throw new Error('HELIUS_RPC environment variable is not set')
+}
 
-async function getWorkingEndpoint(): Promise<Connection> {
+async function getWorkingEndpoint(): Promise<Connection | undefined> {
   try {
     const connection = new Connection(HELIUS_RPC, 'confirmed')
     await connection.getLatestBlockhash()
     console.log('Using Helius RPC endpoint')
     return connection
   } catch (error) {
-    console.warn('Helius endpoint failed, using mock data')
-    return null
+    console.warn('Helius endpoint failed:', error)
+    return undefined
   }
 }
 
 export async function calculatePortfolioMetrics(publicKey: string): Promise<PortfolioMetrics> {
   try {
     const tokenData = await fetchTokenData(publicKey)
-    let connection = null
+    let connection: Connection | undefined
     
     try {
       connection = await getWorkingEndpoint()
     } catch (error) {
       console.warn('Failed to establish RPC connection, using mock data only')
     }
-
     return {
-      defaiScore: calculateDefaiScore(tokenData),
+      defaiScore: calculateDefaiScore({
+        holdings: tokenData.holdings.map(h => ({
+          token: h.token,
+          percentage: h.percentage,
+          balance: h.balance,
+          marketData: h.marketData,
+          address: h.token.address,
+          decimals: h.token.decimals,
+          usdValue: h.usdValue,
+          percentageOwned: h.percentageOwned,
+          firstReceived: h.firstReceived
+        })),
+        summary: tokenData.summary,
+        significantHoldings: tokenData.significantHoldings,
+        dailyPerformance: tokenData.dailyPerformance,
+        performanceVsCMC: tokenData.performanceVsCMC
+      }),
       risk: 75,
       entryScore: 70,
       exitScore: 75,
@@ -70,9 +88,57 @@ export async function calculatePortfolioMetrics(publicKey: string): Promise<Port
       liquidity: 85,
       diversification: 75,
       metrics: {
-        capitalManagement: calculateCapitalMetric(tokenData),
-        degenIndex: calculateDegenIndex(tokenData),
-        defiSavviness: calculateDefiMetric(tokenData)
+        capitalManagement: calculateCapitalMetric({
+          holdings: tokenData.holdings.map(h => ({
+            token: h.token,
+            percentage: h.percentage,
+            balance: h.balance,
+            marketData: h.marketData,
+            address: h.token.address,
+            decimals: h.token.decimals,
+            usdValue: h.usdValue,
+            percentageOwned: h.percentageOwned,
+            firstReceived: h.firstReceived
+          })),
+          summary: tokenData.summary,
+          significantHoldings: tokenData.significantHoldings,
+          dailyPerformance: tokenData.dailyPerformance,
+          performanceVsCMC: tokenData.performanceVsCMC
+        }),
+        degenIndex: calculateDegenIndex({
+          holdings: tokenData.holdings.map(h => ({
+            token: h.token,
+            percentage: h.percentage,
+            balance: h.balance,
+            marketData: h.marketData,
+            address: h.token.address,
+            decimals: h.token.decimals,
+            usdValue: h.usdValue,
+            percentageOwned: h.percentageOwned,
+            firstReceived: h.firstReceived
+          })),
+          summary: tokenData.summary,
+          significantHoldings: tokenData.significantHoldings,
+          dailyPerformance: tokenData.dailyPerformance,
+          performanceVsCMC: tokenData.performanceVsCMC
+        }),
+        defiSavviness: calculateDefiMetric({
+          holdings: tokenData.holdings.map(h => ({
+            token: h.token,
+            percentage: h.percentage,
+            balance: h.balance,
+            marketData: h.marketData,
+            address: h.token.address,
+            decimals: h.token.decimals,
+            usdValue: h.usdValue,
+            percentageOwned: h.percentageOwned,
+            firstReceived: h.firstReceived
+          })),
+          summary: tokenData.summary,
+          significantHoldings: tokenData.significantHoldings,
+          dailyPerformance: tokenData.dailyPerformance,
+          performanceVsCMC: tokenData.performanceVsCMC
+        })
       },
       performance: {
         daily: tokenData.dailyPerformance,
@@ -90,7 +156,7 @@ export async function calculatePortfolioMetrics(publicKey: string): Promise<Port
 
 function calculateDefaiScore(tokenData: TokenData): number {
   return Math.min(Math.round(
-    tokenData.significantHoldings.reduce((score, holding) => {
+    tokenData.significantHoldings.reduce((score: number, holding: { token: string }) => {
       if (holding.token === 'DEFAI') return score + 25
       return score + 10
     }, 40)
@@ -107,7 +173,7 @@ function calculateCapitalMetric(tokenData: TokenData): number {
 function calculateDegenIndex(tokenData: TokenData): number {
   return Math.max(0, Math.min(100, 
     100 - tokenData.significantHoldings
-      .filter(h => h.percentage > 30)
+      .filter((h: { percentage: number }) => h.percentage > 30)
       .length * 15
   ))
 }
@@ -115,8 +181,8 @@ function calculateDegenIndex(tokenData: TokenData): number {
 function calculateDefiMetric(tokenData: TokenData): number {
   return Math.min(Math.round(
     tokenData.significantHoldings
-      .filter(h => ['DEFAI', 'AI16Z'].includes(h.token))
-      .reduce((total, h) => total + h.percentage, 40)
+      .filter((h: { token: string }) => ['DEFAI', 'AI16Z'].includes(h.token))
+      .reduce((total: any, h: { percentage: any }) => total + h.percentage, 40)
   ), 100)
 }
 
