@@ -1,41 +1,6 @@
 import { Connection, PublicKey } from '@solana/web3.js'
 import { fetchTokenData } from '@/scripts/fetchTokenData'
-
-interface TokenHolding {
-  token: {
-    address: string
-    balance: number
-    decimals: number
-    percentageOwned: number
-  }
-  balance: number
-  marketData?: {
-    price: number
-    volume24h: number
-    marketCap: number
-  }
-  percentage: number
-  change24h: number
-}
-
-interface TokenData {
-  holdings: TokenHolding[]
-  summary: {
-    totalValue: number
-    totalHoldings: number
-    significantPositions: number
-    averagePosition: number
-    topHoldingsValue: number
-    topHoldingsPercentage: number
-  }
-  dailyPerformance: number
-  performanceVsCMC: number
-  significantHoldings: Array<{
-    token: string
-    value: number
-    percentage: number
-  }>
-}
+import { TokenData, TokenHolding } from '@/types'
 
 interface PortfolioMetrics {
   defaiScore: number
@@ -75,7 +40,7 @@ async function getWorkingEndpoint(): Promise<Connection> {
     return connection
   } catch (error) {
     console.warn('Helius endpoint failed, using mock data')
-    throw new Error('Failed to establish connection')
+    return null
   }
 }
 
@@ -90,7 +55,6 @@ export async function calculatePortfolioMetrics(publicKey: string): Promise<Port
       console.warn('Failed to establish RPC connection, using mock data only')
     }
 
-    // Calculate metrics using available data
     return {
       defaiScore: calculateDefaiScore(tokenData),
       risk: 75,
@@ -125,39 +89,34 @@ export async function calculatePortfolioMetrics(publicKey: string): Promise<Port
 }
 
 function calculateDefaiScore(tokenData: TokenData): number {
-    const holdingsScore = tokenData.significantHoldings.reduce((score, holding) => {
-        if (holding.token === 'DEFAI') {
-            return score + 25
-        }
-        return score + 10
-    }, 0)
-
-    const performanceScore = (tokenData.dailyPerformance + 100) * 0.3
-    const relativeScore = (tokenData.performanceVsCMC + 100) * 0.2
-
-    return Math.min(Math.round(holdingsScore + performanceScore + relativeScore), 100)
+  return Math.min(Math.round(
+    tokenData.significantHoldings.reduce((score, holding) => {
+      if (holding.token === 'DEFAI') return score + 25
+      return score + 10
+    }, 40)
+  ), 100)
 }
 
 function calculateCapitalMetric(tokenData: TokenData): number {
-    const diversificationScore = Math.min(tokenData.significantHoldings.length * 20, 100)
-    const balanceScore = tokenData.significantHoldings.every(h => h.percentage <= 50) ? 100 : 70
-    
-    return Math.round((diversificationScore + balanceScore) / 2)
+  return Math.min(Math.round(
+    tokenData.summary.totalHoldings * 10 + 
+    tokenData.summary.significantPositions * 15
+  ), 100)
 }
 
 function calculateDegenIndex(tokenData: TokenData): number {
-    const concentrationPenalty = tokenData.significantHoldings
-        .filter(h => h.percentage > 30)
-        .length * 15
-
-    return Math.max(Math.min(100 - concentrationPenalty, 100), 0)
+  return Math.max(0, Math.min(100, 
+    100 - tokenData.significantHoldings
+      .filter(h => h.percentage > 30)
+      .length * 15
+  ))
 }
 
 function calculateDefiMetric(tokenData: TokenData): number {
-    const defiTokens = tokenData.significantHoldings
-        .filter(h => ['DEFAI', 'AI16Z'].includes(h.token))
-        .reduce((total, h) => total + h.percentage, 0)
-
-    return Math.min(Math.round(defiTokens + 40), 100)
+  return Math.min(Math.round(
+    tokenData.significantHoldings
+      .filter(h => ['DEFAI', 'AI16Z'].includes(h.token))
+      .reduce((total, h) => total + h.percentage, 40)
+  ), 100)
 }
 
