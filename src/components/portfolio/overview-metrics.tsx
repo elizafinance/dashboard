@@ -38,26 +38,22 @@ interface PortfolioMetrics {
 
 export function OverviewMetrics() {
   const { publicKey } = useWallet()
-  const [loading, setLoading] = useState(true)
   const [metrics, setMetrics] = useState<PortfolioMetrics | null>(null)
-  const [error, setError] = useState<string | null>(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const fetchMetrics = async () => {
+    async function fetchMetrics() {
       if (!publicKey) {
-        setError('Please connect your wallet')
         setLoading(false)
         return
       }
       
       try {
         setLoading(true)
-        setError(null)
         const data = await calculatePortfolioMetrics(publicKey.toString())
         setMetrics(data)
       } catch (error) {
-        console.error('Failed to fetch metrics:', error)
-        setError('Unable to analyze portfolio')
+        console.error('Error fetching metrics:', error)
       } finally {
         setLoading(false)
       }
@@ -66,26 +62,33 @@ export function OverviewMetrics() {
     fetchMetrics()
   }, [publicKey])
 
-  if (loading) {
+  if (!publicKey) {
     return (
       <Card className="p-6">
-        <div className="h-96 bg-[var(--ocean-light)]/10 rounded animate-pulse" />
+        <p className="text-center text-[var(--ocean-dark)]/60">
+          Connect your wallet to view portfolio metrics
+        </p>
       </Card>
     )
   }
 
-  if (error) {
+  if (loading) {
     return (
-      <Card className="p-6 bg-gradient-to-r from-[var(--sand-light)] to-[var(--sand-dark)] border-2 border-[var(--ocean-light)]">
-        <div className="text-center text-[var(--ocean-dark)]">
-          <p className="text-xl font-bold mb-2">🌊 Rough Waters Ahead</p>
-          <p className="text-sm opacity-80">{error}</p>
-        </div>
+      <Card className="p-6 flex justify-center items-center min-h-[400px]">
+        <Spinner />
       </Card>
     )
   }
 
-  if (!metrics) return null
+  if (!metrics) {
+    return (
+      <Card className="p-6">
+        <p className="text-center text-[var(--ocean-dark)]/60">
+          Error loading metrics
+        </p>
+      </Card>
+    )
+  }
 
   return (
     <Card className="p-6 bg-gradient-to-r from-[var(--sand-light)] to-[var(--sand-dark)] border-2 border-[var(--ocean-light)]">
